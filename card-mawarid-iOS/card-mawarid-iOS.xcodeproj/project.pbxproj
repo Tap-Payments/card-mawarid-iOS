@@ -1,0 +1,398 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E8E9EF8F28F5413300B456A0 /* card_mawarid_iOS.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EF8E28F5413300B456A0 /* card_mawarid_iOS.docc */; };
+		E8E9EF9028F5413300B456A0 /* card_mawarid_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E8E9EF8D28F5413300B456A0 /* card_mawarid_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E8E9EF9B28F5419200B456A0 /* MawaridCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EF9A28F5419100B456A0 /* MawaridCardView.swift */; };
+		E8E9EF9D28F5419D00B456A0 /* MawaridCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8E9EF9C28F5419D00B456A0 /* MawaridCardView.xib */; };
+		E8E9EFA028F542B900B456A0 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8E9EF9F28F542B900B456A0 /* Media.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E8E9EF8A28F5413300B456A0 /* card_mawarid_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = card_mawarid_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8E9EF8D28F5413300B456A0 /* card_mawarid_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = card_mawarid_iOS.h; sourceTree = "<group>"; };
+		E8E9EF8E28F5413300B456A0 /* card_mawarid_iOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = card_mawarid_iOS.docc; sourceTree = "<group>"; };
+		E8E9EF9A28F5419100B456A0 /* MawaridCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MawaridCardView.swift; sourceTree = "<group>"; };
+		E8E9EF9C28F5419D00B456A0 /* MawaridCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MawaridCardView.xib; sourceTree = "<group>"; };
+		E8E9EF9F28F542B900B456A0 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E8E9EF8728F5413300B456A0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E8E9EF8028F5413300B456A0 = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF8C28F5413300B456A0 /* card-mawarid-iOS */,
+				E8E9EF8B28F5413300B456A0 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E8E9EF8B28F5413300B456A0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF8A28F5413300B456A0 /* card_mawarid_iOS.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E8E9EF8C28F5413300B456A0 /* card-mawarid-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF9728F5416200B456A0 /* Assets */,
+				E8E9EF9628F5415D00B456A0 /* Core */,
+				E8E9EF8D28F5413300B456A0 /* card_mawarid_iOS.h */,
+				E8E9EF8E28F5413300B456A0 /* card_mawarid_iOS.docc */,
+			);
+			path = "card-mawarid-iOS";
+			sourceTree = "<group>";
+		};
+		E8E9EF9628F5415D00B456A0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF9928F5416F00B456A0 /* Private */,
+				E8E9EF9828F5416900B456A0 /* Public */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		E8E9EF9728F5416200B456A0 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF9C28F5419D00B456A0 /* MawaridCardView.xib */,
+				E8E9EF9F28F542B900B456A0 /* Media.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		E8E9EF9828F5416900B456A0 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF9E28F541A300B456A0 /* Views */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
+		E8E9EF9928F5416F00B456A0 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		E8E9EF9E28F541A300B456A0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EF9A28F5419100B456A0 /* MawaridCardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E8E9EF8528F5413300B456A0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8E9EF9028F5413300B456A0 /* card_mawarid_iOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E8E9EF8928F5413300B456A0 /* card-mawarid-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8E9EF9328F5413300B456A0 /* Build configuration list for PBXNativeTarget "card-mawarid-iOS" */;
+			buildPhases = (
+				E8E9EF8528F5413300B456A0 /* Headers */,
+				E8E9EF8628F5413300B456A0 /* Sources */,
+				E8E9EF8728F5413300B456A0 /* Frameworks */,
+				E8E9EF8828F5413300B456A0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "card-mawarid-iOS";
+			productName = "card-mawarid-iOS";
+			productReference = E8E9EF8A28F5413300B456A0 /* card_mawarid_iOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E8E9EF8128F5413300B456A0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					E8E9EF8928F5413300B456A0 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = E8E9EF8428F5413300B456A0 /* Build configuration list for PBXProject "card-mawarid-iOS" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E8E9EF8028F5413300B456A0;
+			productRefGroup = E8E9EF8B28F5413300B456A0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E8E9EF8928F5413300B456A0 /* card-mawarid-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E8E9EF8828F5413300B456A0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8E9EFA028F542B900B456A0 /* Media.xcassets in Resources */,
+				E8E9EF9D28F5419D00B456A0 /* MawaridCardView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E8E9EF8628F5413300B456A0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8E9EF9B28F5419200B456A0 /* MawaridCardView.swift in Sources */,
+				E8E9EF8F28F5413300B456A0 /* card_mawarid_iOS.docc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E8E9EF9128F5413300B456A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E8E9EF9228F5413300B456A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E8E9EF9428F5413300B456A0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G46S76PUH4;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tap.company.card-mawarid-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		E8E9EF9528F5413300B456A0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = G46S76PUH4;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "tap.company.card-mawarid-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E8E9EF8428F5413300B456A0 /* Build configuration list for PBXProject "card-mawarid-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8E9EF9128F5413300B456A0 /* Debug */,
+				E8E9EF9228F5413300B456A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E8E9EF9328F5413300B456A0 /* Build configuration list for PBXNativeTarget "card-mawarid-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E8E9EF9428F5413300B456A0 /* Debug */,
+				E8E9EF9528F5413300B456A0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E8E9EF8128F5413300B456A0 /* Project object */;
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MawaridCardView" customModule="card_mawarid_iOS" customModuleProvider="target">
+            <connections>
+                <outlet property="cardCVVTextField" destination="GBs-B6-tny" id="aLg-Tk-xVS"/>
+                <outlet property="cardExpiryButtonCliced" destination="R3v-qX-Uku" id="pIb-qJ-zTh"/>
+                <outlet property="cardExpiryTextField" destination="lnM-S4-q1s" id="Mlv-rd-Mh3"/>
+                <outlet property="cardHolderNameTextField" destination="zNz-QG-i8u" id="QT4-ie-nQf"/>
+                <outlet property="cardNumberTextField" destination="gdt-P3-rRo" id="LnB-Aq-IRq"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="3z0-S7-pgf"/>
+                <outlet property="saveCardLabel" destination="VVi-Sv-otw" id="aA9-zq-ofP"/>
+                <outlet property="saveCheckBoxButton" destination="sb5-bx-PSY" id="aDZ-mD-Zfa"/>
+                <outlet property="titleLabel" destination="0MN-n1-ZYX" id="o3H-4e-SYT"/>
+                <outletCollection property="toBeLocalizedViews" destination="0MN-n1-ZYX" collectionClass="NSMutableArray" id="6op-l4-aY0"/>
+                <outletCollection property="toBeLocalizedViews" destination="zNz-QG-i8u" collectionClass="NSMutableArray" id="rfj-ts-efy"/>
+                <outletCollection property="toBeLocalizedViews" destination="gdt-P3-rRo" collectionClass="NSMutableArray" id="oxf-ce-mJE"/>
+                <outletCollection property="toBeLocalizedViews" destination="lnM-S4-q1s" collectionClass="NSMutableArray" id="ChH-Du-5Qj"/>
+                <outletCollection property="toBeLocalizedViews" destination="GBs-B6-tny" collectionClass="NSMutableArray" id="3rL-Xp-eCc"/>
+                <outletCollection property="toBeLocalizedViews" destination="VVi-Sv-otw" collectionClass="NSMutableArray" id="RdN-bj-TD0"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter card details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MN-n1-ZYX">
+                    <rect key="frame" x="8" y="8" width="398" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Cardholder name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zNz-QG-i8u">
+                    <rect key="frame" x="8" y="49" width="398" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card number" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gdt-P3-rRo">
+                    <rect key="frame" x="8" y="106" width="323" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="cc-number"/>
+                </textField>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="card-icon" translatesAutoresizingMaskIntoConstraints="NO" id="UWz-6y-bbZ">
+                    <rect key="frame" x="351" y="103" width="55" height="40.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="hJD-Se-ley"/>
+                        <constraint firstAttribute="width" secondItem="UWz-6y-bbZ" secondAttribute="height" multiplier="15:11" id="qso-8A-Nya"/>
+                    </constraints>
+                </imageView>
+                <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Card expiry" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lnM-S4-q1s">
+                    <rect key="frame" x="8" y="163.5" width="398" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="CVV" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GBs-B6-tny">
+                    <rect key="frame" x="8" y="217.5" width="398" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES" textContentType="cc-number"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sb5-bx-PSY">
+                    <rect key="frame" x="8" y="271.5" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="7un-fP-oue"/>
+                        <constraint firstAttribute="width" constant="50" id="EPj-h9-1Tn"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="uncheck"/>
+                    <connections>
+                        <action selector="SaveCheckBoxClicked:" destination="-1" eventType="touchUpInside" id="f7A-T0-S8i"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save card for next transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VVi-Sv-otw">
+                    <rect key="frame" x="78" y="286" width="316" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3v-qX-Uku">
+                    <rect key="frame" x="8" y="165" width="398" height="31"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain"/>
+                    <connections>
+                        <action selector="CardExpiryButtonClicked:" destination="-1" eventType="touchUpInside" id="RaA-OE-pib"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UWz-6y-bbZ" secondAttribute="trailing" constant="8" id="40Z-Mh-Fav"/>
+                <constraint firstItem="VVi-Sv-otw" firstAttribute="centerY" secondItem="sb5-bx-PSY" secondAttribute="centerY" id="4Q2-Eb-1u6"/>
+                <constraint firstItem="gdt-P3-rRo" firstAttribute="centerY" secondItem="UWz-6y-bbZ" secondAttribute="centerY" id="5VX-1P-dTj"/>
+                <constraint firstItem="UWz-6y-bbZ" firstAttribute="leading" secondItem="gdt-P3-rRo" secondAttribute="trailing" constant="20" id="76d-TP-Cro"/>
+                <constraint firstItem="lnM-S4-q1s" firstAttribute="trailing" secondItem="zNz-QG-i8u" secondAttribute="trailing" id="7aF-2C-HwJ"/>
+                <constraint firstItem="UWz-6y-bbZ" firstAttribute="top" secondItem="zNz-QG-i8u" secondAttribute="bottom" constant="20" id="8AL-uV-9xq"/>
+                <constraint firstItem="lnM-S4-q1s" firstAttribute="top" secondItem="UWz-6y-bbZ" secondAttribute="bottom" constant="20" id="B7B-WK-CnI"/>
+                <constraint firstItem="VVi-Sv-otw" firstAttribute="leading" secondItem="sb5-bx-PSY" secondAttribute="trailing" constant="20" id="EpU-U0-Yv0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="VVi-Sv-otw" secondAttribute="trailing" constant="20" id="Gow-IY-dqR"/>
+                <constraint firstAttribute="trailing" secondItem="0MN-n1-ZYX" secondAttribute="trailing" constant="8" id="K5F-aI-VIy"/>
+                <constraint firstItem="sb5-bx-PSY" firstAttribute="leading" secondItem="GBs-B6-tny" secondAttribute="leading" id="Mqj-li-hZE"/>
+                <constraint firstItem="0MN-n1-ZYX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="NXl-uS-jOT"/>
+                <constraint firstItem="GBs-B6-tny" firstAttribute="trailing" secondItem="zNz-QG-i8u" secondAttribute="trailing" id="Obt-P2-KFQ"/>
+                <constraint firstItem="zNz-QG-i8u" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="VlV-kd-8ha"/>
+                <constraint firstItem="zNz-QG-i8u" firstAttribute="top" secondItem="0MN-n1-ZYX" secondAttribute="bottom" constant="20" id="ZWe-SY-Q1d"/>
+                <constraint firstItem="gdt-P3-rRo" firstAttribute="leading" secondItem="zNz-QG-i8u" secondAttribute="leading" id="bmB-Pz-xIN"/>
+                <constraint firstItem="R3v-qX-Uku" firstAttribute="centerY" secondItem="lnM-S4-q1s" secondAttribute="centerY" id="cr0-vW-TSR"/>
+                <constraint firstItem="sb5-bx-PSY" firstAttribute="top" secondItem="GBs-B6-tny" secondAttribute="bottom" constant="20" id="g2w-yt-EtJ"/>
+                <constraint firstItem="R3v-qX-Uku" firstAttribute="trailing" secondItem="lnM-S4-q1s" secondAttribute="trailing" id="gvB-Au-nmh"/>
+                <constraint firstItem="R3v-qX-Uku" firstAttribute="leading" secondItem="lnM-S4-q1s" secondAttribute="leading" id="kHb-p2-8h1"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="zNz-QG-i8u" secondAttribute="trailing" constant="8" id="l6d-Ez-Zc9"/>
+                <constraint firstItem="lnM-S4-q1s" firstAttribute="leading" secondItem="zNz-QG-i8u" secondAttribute="leading" id="n1R-TT-UkV"/>
+                <constraint firstItem="0MN-n1-ZYX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="oE9-Dr-7f9"/>
+                <constraint firstItem="GBs-B6-tny" firstAttribute="top" secondItem="lnM-S4-q1s" secondAttribute="bottom" constant="20" id="oFD-zD-VJ5"/>
+                <constraint firstItem="R3v-qX-Uku" firstAttribute="height" secondItem="lnM-S4-q1s" secondAttribute="height" multiplier="0.911765" id="qoi-kt-uey"/>
+                <constraint firstItem="GBs-B6-tny" firstAttribute="leading" secondItem="zNz-QG-i8u" secondAttribute="leading" id="voU-Jw-uYA"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="137.68115942028987" y="113.83928571428571"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="card-icon" width="75" height="55"/>
+        <image name="uncheck" width="50" height="50"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
