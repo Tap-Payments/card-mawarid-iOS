@@ -56,8 +56,8 @@ extension MawaridCardView {
         nonNullCardName = nonNullCardName.alphabetOnly()
         // we limit to the maximum length allowed
         
-        nonNullCardName = String(nonNullCardName.prefix(26)))
-        cardName = nonNullCardName
+        nonNullCardName = String(nonNullCardName.prefix(26))
+        self.cardName = nonNullCardName
         return nonNullCardName
     }
     

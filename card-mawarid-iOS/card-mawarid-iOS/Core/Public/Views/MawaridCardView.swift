@@ -34,7 +34,7 @@ import TapCardVlidatorKit_iOS
     //MARK: Internal attributes
     internal let themePath:String = "cardView"
     /// Holds the expiration date for the card
-    internal var expiryDate:Date? {
+    internal var expiryDate:Date = .init() {
         didSet {
             postCardExpiryDate()
         }
@@ -125,7 +125,13 @@ import TapCardVlidatorKit_iOS
                                   selectedRows: [0,0], columnPercents: [0.5, 0.5])
         .setCancelButton(title: TapLocalisationManager.shared.localisedValue(for: "cancel", with: defaultLocalisationFilePath), font: nil, color: nil, action: nil)
         .setDoneButton(title: TapLocalisationManager.shared.localisedValue(for: "done", with: defaultLocalisationFilePath), font: nil, color: nil, action: { popover, selectedRows, selectedStrings in
-            print("selected rows \(selectedRows) strings \(selectedStrings)")
+            // Create a date
+            let gregorianCalendar = NSCalendar(calendarIdentifier: .gregorian)!
+            
+            var dateComponents = DateComponents()
+            dateComponents.year = Int(selectedStrings.last ?? "1900")
+            dateComponents.month = Int(selectedStrings.first ?? "01")
+            self.expiryDate = gregorianCalendar.date(from: dateComponents) ?? .init()
         })
         .setSelectedRows(selectedDateParts())
         .setFontColors([.black,.black])
@@ -160,6 +166,14 @@ import TapCardVlidatorKit_iOS
     
     /// handles logic needed when the card expiry changes
     internal func postCardExpiryDate() {
+        // First check if the new expiry date is older than the current date
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let currentMonth = Calendar.current.component(.month, from: Date())
+        
+        guard (currentYear > expiryDate.tap_year || currentMonth <= expiryDate.tap_month) else {
+            expiryDate = .init()
+            return
+        }
         cardExpiryTextField.text = displayDate()
     }
     
@@ -279,7 +293,6 @@ import TapCardVlidatorKit_iOS
     
     /// Returns a displayable string in the format of MM/YY
     internal func displayDate() -> String {
-        guard let expiryDate = expiryDate else { return "" }
         return "\(expiryDate.tap_month)/\(expiryDate.tap_year)"
     }
     
