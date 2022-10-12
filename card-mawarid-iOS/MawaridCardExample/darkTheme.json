@@ -1,0 +1,25 @@
+{
+    "cardView":{
+        "containter":{
+            "backgroundColor":"#000000"
+        },
+        "textFields":{
+            "textColor":"#ffffff",
+            "font":"Tajawal-Light,14",
+            "placeholderColor":"#ffffff99"
+        },
+        "titleLabel":{
+            "textColor":"#ffffff",
+            "font":"Tajawal-Regular,20"
+        },
+        "saveLabel":{
+            "textColor":"#ffffff",
+            "font":"Tajawal-Regular,20"
+        },
+        "saveCheckBox":{
+            "uncheckedIcon":"uncheck",
+            "checkedIcon":"check"
+        },
+        "cardIcon":"card-icon"
+    }
+}

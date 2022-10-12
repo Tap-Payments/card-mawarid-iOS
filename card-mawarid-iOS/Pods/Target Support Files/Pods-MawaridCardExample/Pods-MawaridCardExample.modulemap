@@ -1,0 +1,6 @@
+framework module Pods_MawaridCardExample {
+  umbrella header "Pods-MawaridCardExample-umbrella.h"
+
+  export *
+  module * { export * }
+}

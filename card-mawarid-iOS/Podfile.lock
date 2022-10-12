@@ -1,0 +1,74 @@
+PODS:
+  - CommonDataModelsKit-iOS (1.0.82):
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapCardVlidatorKit-iOS
+    - TapKeychain
+  - LocalisationManagerKit-iOS (1.0.4)
+  - SwiftyPickerPopover (6.6.6)
+  - SwiftyRSA (1.7.0):
+    - SwiftyRSA/ObjC (= 1.7.0)
+  - SwiftyRSA/ObjC (1.7.0)
+  - TapAdditionsKitV2 (0.0.9):
+    - TapSwiftFixesV2
+  - TapApplicationV2 (0.0.2):
+    - TapAdditionsKitV2
+  - TapCardVlidatorKit-iOS (1.0.19)
+  - TapFontKit-iOS (0.0.9):
+    - TapSwiftFixesV2
+  - TapKeychain (1.0.5)
+  - TapNetworkKit-iOS (1.0.8):
+    - TapAdditionsKitV2
+  - TapSwiftFixesV2 (1.0.0):
+    - TapSwiftFixesV2/CoreGraphics (= 1.0.0)
+    - TapSwiftFixesV2/Exceptions (= 1.0.0)
+    - TapSwiftFixesV2/Threading (= 1.0.0)
+  - TapSwiftFixesV2/CoreGraphics (1.0.0)
+  - TapSwiftFixesV2/Exceptions (1.0.0)
+  - TapSwiftFixesV2/Threading (1.0.0)
+  - TapThemeManager2020 (1.0.61):
+    - LocalisationManagerKit-iOS
+    - TapFontKit-iOS
+
+DEPENDENCIES:
+  - CommonDataModelsKit-iOS
+  - LocalisationManagerKit-iOS
+  - SwiftyPickerPopover
+  - SwiftyRSA
+  - TapApplicationV2
+  - TapKeychain
+  - TapNetworkKit-iOS
+  - TapThemeManager2020
+
+SPEC REPOS:
+  trunk:
+    - CommonDataModelsKit-iOS
+    - LocalisationManagerKit-iOS
+    - SwiftyPickerPopover
+    - SwiftyRSA
+    - TapAdditionsKitV2
+    - TapApplicationV2
+    - TapCardVlidatorKit-iOS
+    - TapFontKit-iOS
+    - TapKeychain
+    - TapNetworkKit-iOS
+    - TapSwiftFixesV2
+    - TapThemeManager2020
+
+SPEC CHECKSUMS:
+  CommonDataModelsKit-iOS: 190d4a5ba938a48d091b8721f5569f4ac7378531
+  LocalisationManagerKit-iOS: bd1a9d16509a06dd1aea45b9f47cf21bdfe0796c
+  SwiftyPickerPopover: a402960a6687c911ffcb4e9fb282a1bc61186ab4
+  SwiftyRSA: 8c6dd1ea7db1b8dc4fb517a202f88bb1354bc2c6
+  TapAdditionsKitV2: 9846381c32b150303cbeff355550d3500a98f77d
+  TapApplicationV2: aee3d046c4272778431e1535de6cab34e1269f8c
+  TapCardVlidatorKit-iOS: ad725812de9e5127bde0ed8903f303a0ea20803e
+  TapFontKit-iOS: 51ed2ddbe9f2b5ece1cc587ed45af9147e5c6fc1
+  TapKeychain: 143aa70bb2d1b094e0298e944660264034c79849
+  TapNetworkKit-iOS: d1a6110b4f43e9b1cceafe469cf6cc3fb775a2cf
+  TapSwiftFixesV2: a8623a7273c6790b9754ec7e272e96fce7d3a800
+  TapThemeManager2020: 63e2d207331310f00f0f019350e766e135acc3da
+
+PODFILE CHECKSUM: 447409fd3d3d9629dda72979da6e44c2379d1d99
+
+COCOAPODS: 1.11.2

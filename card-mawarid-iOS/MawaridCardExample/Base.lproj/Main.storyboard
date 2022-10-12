@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MawaridCardExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XdG-D0-aXm" customClass="MawaridCardView" customModule="card_mawarid_iOS">
+                                <rect key="frame" x="0.0" y="113" width="414" height="330"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="330" id="dMi-8B-45W"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the card collection tap view. Add it where you want" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCK-Y6-z5S">
+                                <rect key="frame" x="8" y="52" width="398" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Then listen to the callbacks coming from it." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65q-jj-77K">
+                                <rect key="frame" x="8" y="463" width="398" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aCG-Va-lki">
+                                <rect key="frame" x="8" y="491.5" width="398" height="128"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="XsD-IC-UkK"/>
+                                </constraints>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMZ-TO-jvI">
+                                <rect key="frame" x="8" y="627.5" width="81" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Tokenize"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2F-vt-IHy">
+                                <rect key="frame" x="350.5" y="627.5" width="55.5" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Save"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="OMZ-TO-jvI" firstAttribute="top" secondItem="aCG-Va-lki" secondAttribute="bottom" constant="8" id="1qv-3p-PUD"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="65q-jj-77K" secondAttribute="trailing" constant="8" id="4vZ-ry-41T"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="aCG-Va-lki" secondAttribute="trailing" constant="8" id="7TV-4H-vHq"/>
+                            <constraint firstItem="XdG-D0-aXm" firstAttribute="top" secondItem="TCK-Y6-z5S" secondAttribute="bottom" constant="20" id="8zs-Tg-teI"/>
+                            <constraint firstItem="XdG-D0-aXm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="EUb-GY-eqb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TCK-Y6-z5S" secondAttribute="trailing" constant="8" id="Lf0-cO-7NM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="F2F-vt-IHy" secondAttribute="trailing" constant="8" id="P4m-ZK-JBF"/>
+                            <constraint firstItem="aCG-Va-lki" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="PC0-Qc-LgT"/>
+                            <constraint firstItem="OMZ-TO-jvI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="ZGO-Gc-DBt"/>
+                            <constraint firstItem="aCG-Va-lki" firstAttribute="top" secondItem="65q-jj-77K" secondAttribute="bottom" constant="8" id="bDd-Ct-6j7"/>
+                            <constraint firstItem="F2F-vt-IHy" firstAttribute="centerY" secondItem="OMZ-TO-jvI" secondAttribute="centerY" id="c1P-Ov-bcq"/>
+                            <constraint firstItem="TCK-Y6-z5S" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="g36-wq-8ST"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XdG-D0-aXm" secondAttribute="trailing" id="jfe-YC-fqR"/>
+                            <constraint firstItem="65q-jj-77K" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="m5I-0b-xBe"/>
+                            <constraint firstItem="65q-jj-77K" firstAttribute="top" secondItem="XdG-D0-aXm" secondAttribute="bottom" constant="20" id="nG7-uB-6xr"/>
+                            <constraint firstItem="TCK-Y6-z5S" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="tyZ-1q-xtR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mawaridCardView" destination="XdG-D0-aXm" id="NAc-u1-o4P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="135"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
