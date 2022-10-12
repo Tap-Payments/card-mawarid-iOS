@@ -77,6 +77,9 @@
                                 <rect key="frame" x="8" y="627.5" width="81" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Tokenize"/>
+                                <connections>
+                                    <action selector="tokenizeClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DGz-Vu-ruR"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F2F-vt-IHy">
                                 <rect key="frame" x="350.5" y="627.5" width="55.5" height="31"/>

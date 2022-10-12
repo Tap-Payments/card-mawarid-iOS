@@ -40,6 +40,7 @@
 		E8E9EFF828F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF728F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift */; };
 		E8E9EFFB28F6C46900B456A0 /* CardKitValidationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */; };
 		E8E9EFFD28F6C5BB00B456A0 /* CardForm+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */; };
+		E8E9EFFF28F6CABD00B456A0 /* CardForm+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFE28F6CABD00B456A0 /* CardForm+Interfaces.swift */; };
 		FCC7A63D906FE55991C00D35 /* Pods_MawaridCardExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB9C34B423A9DB6AA8B888 /* Pods_MawaridCardExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,7 @@
 		E8E9EFF728F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardForm+TextFieldsValidations.swift"; sourceTree = "<group>"; };
 		E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardKitValidationStatusEnum.swift; sourceTree = "<group>"; };
 		E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardForm+Protocol.swift"; sourceTree = "<group>"; };
+		E8E9EFFE28F6CABD00B456A0 /* CardForm+Interfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardForm+Interfaces.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */,
+				E8E9EFFE28F6CABD00B456A0 /* CardForm+Interfaces.swift */,
 			);
 			path = Interfaces;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8E9EFF328F69C8100B456A0 /* TapCardForumConfiguration.swift in Sources */,
+				E8E9EFFF28F6CABD00B456A0 /* CardForm+Interfaces.swift in Sources */,
 				E8E9EFEA28F69ACB00B456A0 /* NetworkManager+HandlingResponses.swift in Sources */,
 				E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */,
 				E8E9EFEC28F69ACB00B456A0 /* TapCallsResponseGenerator.swift in Sources */,

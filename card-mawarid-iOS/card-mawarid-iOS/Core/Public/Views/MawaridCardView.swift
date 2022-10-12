@@ -44,6 +44,11 @@ import TapCardVlidatorKit_iOS
     //MARK: Internal attributes
     internal let themePath:String = "cardView"
     
+    /// Converts the scattered data into one solid model to represents the tap card 
+    internal var currentTapCard:TapCard {
+        return .init(tapCardNumber: cardNumber, tapCardName: cardName, tapCardExpiryMonth: "\(expiryDate.tap_month)", tapCardExpiryYear: "\(expiryDate.tap_year)", tapCardCVV: cardCVV)
+    }
+    
     /// Holds the expiration date for the card
     internal var expiryDate:Date = .init() {
         didSet {
@@ -158,6 +163,8 @@ import TapCardVlidatorKit_iOS
         isSaveCardChecked = !isSaveCardChecked
         // Show the right checkbox icon
         checkBoxImageView.tap_theme_image = .init(keyPath: "\(themePath).saveCheckBox.\(isSaveCardChecked ? "checkedIcon" : "uncheckedIcon")")
+        // inform the delegate
+        delegate?.saveCardCheckBoxChanged(to: isSaveCardChecked)
     }
     
     
