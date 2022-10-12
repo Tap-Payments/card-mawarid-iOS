@@ -32,21 +32,41 @@ extension MawaridCardView {
         nonNullCardNumber = nonNullCardNumber.onlyDigits()
         // first we check if there is a valid brand detected or not
         guard let validate = detectBrand(cardNumber: nonNullCardNumber),
-              validate.cardBrand != .unknown else { return "" }
+              validate.cardBrand != .unknown else {
+            self.cardNumber = ""
+            return ""
+        }
         // If status is invald, we ignore the latest change :)
         if validate.validationState == .invalid {
             nonNullCardNumber = String(nonNullCardNumber.dropLast())
         }
         // If there is a detected brand then we space the text based on the card brand scheme
         let spacing = CardValidator.cardSpacing(cardNumber: nonNullCardNumber)
+        self.cardNumber = nonNullCardNumber
         return nonNullCardNumber.cardFormat(with: spacing)
     }
+    
     
     //MARK: Card name text field validations methods
     
     
     //MARK: Card cvv text field validations methods
-    
+    /**
+     Defines the correct text to be displayed in the card cvv field after a user change
+     */
+    internal func correctText(cvv:String?) -> String {
+        var nonNullCVV:String = cvv ?? ""
+        nonNullCVV = nonNullCVV.onlyDigits()
+        // first we check if there is a valid brand detected or not
+        guard let validate = detectBrand(cardNumber: cardNumber),
+              validate.cardBrand != .unknown else {
+            cardCVV = ""
+            return "" }
+        // Then we need to make sure that the CVV has a max of the allowed CVV length for the detected brand
+        nonNullCVV = String(nonNullCVV.prefix(CardValidator.cvvLength(for: validate.cardBrand)))
+        cardCVV = nonNullCVV
+        return nonNullCVV
+    }
     
     //MARK: Card expiry text field validations methods
     

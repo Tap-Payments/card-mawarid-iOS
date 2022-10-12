@@ -34,7 +34,24 @@ import TapCardVlidatorKit_iOS
     //MARK: Internal attributes
     internal let themePath:String = "cardView"
     /// Holds the expiration date for the card
-    internal var expiryDate:Date?
+    internal var expiryDate:Date? {
+        didSet {
+            postCardExpiryDate()
+        }
+    }
+    /// Holds the card number till now
+    internal var cardNumber:String = "" {
+        didSet{
+            postCardNumberChange()
+        }
+    }
+    
+    /// Holds the card CVV till now
+    internal var cardCVV:String = "" {
+        didSet{
+            postCardCVVChange()
+        }
+    }
     /// Holds the last style theme applied
     private var lastUserInterfaceStyle:UIUserInterfaceStyle = .light
     /// Holds the state of save card checkbox
@@ -79,6 +96,9 @@ import TapCardVlidatorKit_iOS
     @IBOutlet var toBeLocalizedViews: [UIView]!
     /// Holds all the textfieelds for card data input
     @IBOutlet var cardFields: [UITextField]!
+    @IBOutlet weak var saveCardButton: UIButton!
+    @IBOutlet weak var expiryButton: UIButton!
+    
     
     //MARK: UI fired events handling
     /// Handles the click handler for the expiry date selection
@@ -120,12 +140,37 @@ import TapCardVlidatorKit_iOS
         self.contentView = setupXIB()
         matchThemeAttributes()
         setBrandsForValidator()
+        cardNumber = ""
     }
     
     
     /// Sets the allowed card brands for the validator so he knows exactly what are we validating against
     internal func setBrandsForValidator() {
         
+    }
+    
+    /// handles logic needed when the card expiry changes
+    internal func postCardExpiryDate() {
+        cardExpiryTextField.text = displayDate()
+    }
+    
+    /// handles logic needed when the card cvv changes
+    internal func postCardCVVChange() {
+        cardCVVTextField.text = cardCVV
+    }
+    
+    
+    /// handles logic needed when the card number changes
+    internal func postCardNumberChange() {
+        // If valid, then we enable the expiry, CVV and Save. Disable otherwise
+        let enableFields:Bool = detectBrand(cardNumber: cardNumber)?.validationState == .valid
+        cardCVVTextField.isUserInteractionEnabled = enableFields
+        expiryButton.isUserInteractionEnabled = enableFields
+        saveCardButton.isUserInteractionEnabled = enableFields
+        
+        // Reset needed data
+        expiryDate = .init()
+        cardCVV = ""
     }
     
     /// The method that deals with mapping and applying the theming attributes to the different fields
@@ -203,6 +248,8 @@ import TapCardVlidatorKit_iOS
         print(textField.text ?? "")
         if textField == cardNumberTextField {
             cardNumberTextField.text = correctText(cardNumber: cardNumberTextField.text)
+        }else if textField == cardCVVTextField {
+            correctText(cvv: cardCVVTextField.text)
         }
     }
     
@@ -251,5 +298,4 @@ extension MawaridCardView: UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
     }
-    
 }

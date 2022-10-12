@@ -18,6 +18,8 @@
                 <outlet property="cardNumberTextField" destination="gdt-P3-rRo" id="LnB-Aq-IRq"/>
                 <outlet property="checkBoxImageView" destination="NkL-vf-gvd" id="T20-a4-mgA"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="3z0-S7-pgf"/>
+                <outlet property="expiryButton" destination="R3v-qX-Uku" id="4yE-zI-Rab"/>
+                <outlet property="saveCardButton" destination="t8G-fN-lvw" id="3B9-Ou-mQz"/>
                 <outlet property="saveCardLabel" destination="VVi-Sv-otw" id="aA9-zq-ofP"/>
                 <outlet property="titleLabel" destination="0MN-n1-ZYX" id="o3H-4e-SYT"/>
                 <outletCollection property="toBeLocalizedViews" destination="0MN-n1-ZYX" collectionClass="NSMutableArray" id="6op-l4-aY0"/>
