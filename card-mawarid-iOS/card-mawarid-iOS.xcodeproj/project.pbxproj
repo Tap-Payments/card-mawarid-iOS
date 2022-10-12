@@ -37,7 +37,9 @@
 		E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFEE28F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift */; };
 		E8E9EFF328F69C8100B456A0 /* TapCardForumConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */; };
 		E8E9EFF528F69E1700B456A0 /* CardKitConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF428F69E1700B456A0 /* CardKitConfigurationViewController.swift */; };
-		E8E9EFF828F6AB2F00B456A0 /* CardFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */; };
+		E8E9EFF828F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF728F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift */; };
+		E8E9EFFB28F6C46900B456A0 /* CardKitValidationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */; };
+		E8E9EFFD28F6C5BB00B456A0 /* CardForm+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */; };
 		FCC7A63D906FE55991C00D35 /* Pods_MawaridCardExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB9C34B423A9DB6AA8B888 /* Pods_MawaridCardExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -102,7 +104,9 @@
 		E8E9EFEE28F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TapCheckout+WebPaymentHandler.swift"; sourceTree = "<group>"; };
 		E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardForumConfiguration.swift; sourceTree = "<group>"; };
 		E8E9EFF428F69E1700B456A0 /* CardKitConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardKitConfigurationViewController.swift; sourceTree = "<group>"; };
-		E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormViewModel.swift; sourceTree = "<group>"; };
+		E8E9EFF728F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardForm+TextFieldsValidations.swift"; sourceTree = "<group>"; };
+		E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardKitValidationStatusEnum.swift; sourceTree = "<group>"; };
+		E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardForm+Protocol.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +194,7 @@
 		E8E9EF9828F5416900B456A0 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				E8E9EFF928F6C45300B456A0 /* Enums */,
 				E8E9EFF128F69C7800B456A0 /* Interfaces */,
 				E8E9EF9E28F541A300B456A0 /* Views */,
 			);
@@ -292,9 +297,18 @@
 		E8E9EFF628F6AB1C00B456A0 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */,
+				E8E9EFF728F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift */,
+				E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E8E9EFF928F6C45300B456A0 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -486,8 +500,10 @@
 				E8E9EFEA28F69ACB00B456A0 /* NetworkManager+HandlingResponses.swift in Sources */,
 				E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */,
 				E8E9EFEC28F69ACB00B456A0 /* TapCallsResponseGenerator.swift in Sources */,
+				E8E9EFFD28F6C5BB00B456A0 /* CardForm+Protocol.swift in Sources */,
 				E8E9EFEF28F69B1D00B456A0 /* NetworkManagerExtension.swift in Sources */,
 				E8E9EFE528F69ACB00B456A0 /* NetworkManager.swift in Sources */,
+				E8E9EFFB28F6C46900B456A0 /* CardKitValidationStatusEnum.swift in Sources */,
 				E8E9EFE828F69ACB00B456A0 /* CardFieldsValidity.swift in Sources */,
 				E8E9EF9B28F5419200B456A0 /* MawaridCardView.swift in Sources */,
 				E8E9EFE628F69ACB00B456A0 /* TapCardDataConfiguration.swift in Sources */,
@@ -496,7 +512,7 @@
 				E8E9EFE928F69ACB00B456A0 /* TapCardForumTheme.swift in Sources */,
 				E8E9EF8F28F5413300B456A0 /* card_mawarid_iOS.docc in Sources */,
 				E8E9EFE728F69ACB00B456A0 /* TapCardForumLocalisation.swift in Sources */,
-				E8E9EFF828F6AB2F00B456A0 /* CardFormViewModel.swift in Sources */,
+				E8E9EFF828F6AB2F00B456A0 /* CardForm+TextFieldsValidations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

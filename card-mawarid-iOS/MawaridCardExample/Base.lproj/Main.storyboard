@@ -111,6 +111,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="eventsTextView" destination="aCG-Va-lki" id="0k9-fZ-cMA"/>
                         <outlet property="loadingIndicator" destination="qTd-4u-YFc" id="LDI-1N-nsm"/>
                         <outlet property="mawaridCardView" destination="XdG-D0-aXm" id="NAc-u1-o4P"/>
                     </connections>

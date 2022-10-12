@@ -56,7 +56,7 @@ extension MawaridCardView {
         nonNullCardName = nonNullCardName.alphabetOnly()
         // we limit to the maximum length allowed
         
-        nonNullCardName = String(nonNullCardName.prefix(26))
+        nonNullCardName = String(nonNullCardName.prefix(26)).uppercased()
         self.cardName = nonNullCardName
         return nonNullCardName
     }
@@ -79,81 +79,45 @@ extension MawaridCardView {
         return nonNullCVV
     }
     
-    //MARK: Card expiry text field validations methods
+    //MARK: Form validation methods
     
-    
-}
-
-
-
-fileprivate extension String {
-    /**
-     Returns all the charachters that are only digits
-     - Returns: A string that has only digits from the provided string
-     */
-    func onlyDigits() -> String {
-        return self.filter { "0123456789".contains($0) }
+    /// Checks if the card name entered matches all needed requirements
+    internal func cardNameIsValid() -> Bool {
+        return cardName.alphabetOnly().lowercased() == cardName.lowercased() &&
+        cardName.count > 2 &&
+        cardName.count <= 26
     }
     
-    /**
-     Returns all the charachters that are only digits and spaces
-     - Returns: A string that has only digits and spaces from the provided string
-     */
-    func digitsWithSpaces() -> String {
-        return self.filter { "0123456789 ".contains($0) }
-    }
-    
-    /**
-     Returns all the charachters that are only alphabet
-     - Returns: A lowercase string that has only alphabet from the provided string
-     */
-    func alphabetOnly() -> String {
-        return self.lowercased().filter { "abcdefghijklmnopqrstuvwxyz ".contains($0) }
-    }
-    
-    /**
-     Returns a formatted credit card number with the spaces in the correct palces
-     - Parameter spaces: List of indices where you want to put the spaces in
-     - Returns: Formatted string where a space is added at the provided indices
-     */
-    func cardFormat(with spaces:[Int]) -> String {
-        // Create a regexx template that will decide where to put the spaces afterwards
-        let regex: NSRegularExpression
-        
-        do {
-            var pattern = ""
-            var first = true
-            for group in spaces {
-                // For every spacing index, we will create a regex pattern of DIGTS with the length of the index provided
-                pattern += "(\\d{1,\(group)})"
-                if !first {
-                    pattern += "?"
-                }
-                first = false
-            }
-            regex = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options())
-        } catch {
-            fatalError("Error when creating regular expression: \(error)")
+    /// Checks if the card number entered matches all needed requirements
+    internal func cardNumberIsValid() -> Bool {
+        guard let definedBrand = detectBrand(cardNumber: cardNumber),
+              definedBrand.validationState == .valid,
+              definedBrand.cardBrand != .unknown else {
+            return false
         }
-        
-        return NSArray(array: self.onlyDigits().split(with: regex)).componentsJoined(by: " ")
+        return true
     }
     
-    private func split(with regex: NSRegularExpression) -> [String] {
-        let matches = regex.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: NSMakeRange(0, self.count))
-        var result = [String]()
-        
-        matches.forEach {
-            for i in 1..<$0.numberOfRanges {
-                let range = $0.range(at: i)
-                
-                if range.length > 0 {
-                    result.append(NSString(string: self).substring(with: range))
-                }
-            }
+    /// Checks if the card cvv entered matches all needed requirements
+    internal func cardCVVValid() -> Bool {
+        guard let definedBrand = detectBrand(cardNumber: cardNumber),
+              cardNameIsValid(),
+              cardCVV.onlyDigits() == cardCVV,
+              cardCVV.count == CardValidator.cvvLength(for: definedBrand.cardBrand) else {
+            return false
         }
-        
-        return result
+        return true
     }
     
+    /// Checks the overall form validation status. Meaning if all the fields are fully valid entered
+    internal func formValidationStatus() -> CardKitValidationStatusEnum {
+        if cardNameIsValid(),
+           cardCVVValid(),
+           cardNameIsValid() {
+            formValidation = .Valid
+            return .Valid
+        }
+        formValidation = .Invalid
+        return .Invalid
+    }
 }

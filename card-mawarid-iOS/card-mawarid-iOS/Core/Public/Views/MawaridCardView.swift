@@ -28,17 +28,29 @@ import TapCardVlidatorKit_iOS
     }
     
     //MARK: Public attributes
+    /// Holds the card form validation
+    @objc public internal(set) var formValidation:CardKitValidationStatusEnum = .Invalid {
+        didSet{
+            if oldValue != formValidation {
+                postCardFormValidationChanged()
+            }
+        }
+    }
     /// We will need to know the presenting view controller to display things like date picker
     @objc public var presentingViewController:UIViewController = .init()
+    /// A delegate callbacks to get information from the card form itself
+    @objc public var delegate:MawaridCardDelegate?
     
     //MARK: Internal attributes
     internal let themePath:String = "cardView"
+    
     /// Holds the expiration date for the card
     internal var expiryDate:Date = .init() {
         didSet {
             postCardExpiryDate()
         }
     }
+    
     /// Holds the card number till now
     internal var cardNumber:String = "" {
         didSet{
@@ -175,16 +187,19 @@ import TapCardVlidatorKit_iOS
             return
         }
         cardExpiryTextField.text = displayDate()
+        let _ = formValidationStatus()
     }
     
     /// handles logic needed when the card cvv changes
     internal func postCardCVVChange() {
         cardCVVTextField.text = cardCVV
+        let _ = formValidationStatus()
     }
     
     /// handles logic needed after card name changes
     internal func postCardNameChange() {
         cardHolderNameTextField.text = cardName
+        let _ = formValidationStatus()
     }
     
     
@@ -199,6 +214,13 @@ import TapCardVlidatorKit_iOS
         // Reset needed data
         expiryDate = .init()
         cardCVV = ""
+        let _ = formValidationStatus()
+    }
+    
+    /// handles logic needed when the card validation
+    internal func postCardFormValidationChanged() {
+        // inform the delegate
+        delegate?.cardValidationStatusChanged(to: formValidation)
     }
     
     /// The method that deals with mapping and applying the theming attributes to the different fields
