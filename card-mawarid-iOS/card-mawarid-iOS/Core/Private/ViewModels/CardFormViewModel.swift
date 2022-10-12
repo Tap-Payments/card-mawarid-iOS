@@ -48,7 +48,18 @@ extension MawaridCardView {
     
     
     //MARK: Card name text field validations methods
-    
+    /**
+     Defines the correct text to be displayed in the card cvv field after a user change
+     */
+    internal func correctText(cardName:String?) -> String {
+        var nonNullCardName:String = cardName ?? ""
+        nonNullCardName = nonNullCardName.alphabetOnly()
+        // we limit to the maximum length allowed
+        
+        nonNullCardName = String(nonNullCardName.prefix(26)))
+        cardName = nonNullCardName
+        return nonNullCardName
+    }
     
     //MARK: Card cvv text field validations methods
     /**

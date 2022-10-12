@@ -52,6 +52,15 @@ import TapCardVlidatorKit_iOS
             postCardCVVChange()
         }
     }
+    
+    
+    /// Holds the card name till now
+    internal var cardName:String = "" {
+        didSet{
+            postCardNameChange()
+        }
+    }
+    
     /// Holds the last style theme applied
     private var lastUserInterfaceStyle:UIUserInterfaceStyle = .light
     /// Holds the state of save card checkbox
@@ -159,6 +168,11 @@ import TapCardVlidatorKit_iOS
         cardCVVTextField.text = cardCVV
     }
     
+    /// handles logic needed after card name changes
+    internal func postCardNameChange() {
+        cardHolderNameTextField.text = cardName
+    }
+    
     
     /// handles logic needed when the card number changes
     internal func postCardNumberChange() {
@@ -249,7 +263,9 @@ import TapCardVlidatorKit_iOS
         if textField == cardNumberTextField {
             cardNumberTextField.text = correctText(cardNumber: cardNumberTextField.text)
         }else if textField == cardCVVTextField {
-            correctText(cvv: cardCVVTextField.text)
+            let _ = correctText(cvv: cardCVVTextField.text)
+        }else if textField == cardHolderNameTextField {
+            let _ = correctText(cardName: cardHolderNameTextField.text)
         }
     }
     
