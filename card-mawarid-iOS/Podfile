@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '13.0'
 
 target 'card-mawarid-iOS' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -10,9 +10,7 @@ pod 'TapNetworkKit-iOS'
 pod 'TapApplicationV2'
 pod 'SwiftyRSA'
 pod 'TapKeychain'
-pod 'LocalisationManagerKit-iOS'
-pod 'TapThemeManager2020'
-pod 'CommonDataModelsKit-iOS'
+pod 'TapUIKit-iOS'
 pod 'SwiftyPickerPopover'
 end
 

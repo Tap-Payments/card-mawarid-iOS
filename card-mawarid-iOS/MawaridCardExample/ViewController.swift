@@ -12,11 +12,13 @@ import card_mawarid_iOS
 class ViewController: UIViewController {
 
     @IBOutlet weak var mawaridCardView: MawaridCardView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         mawaridCardView.presentingViewController = self
+        loadingIndicator.isHidden = true
     }
 
 

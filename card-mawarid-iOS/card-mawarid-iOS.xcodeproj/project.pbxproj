@@ -25,6 +25,19 @@
 		E8E9EFC228F550AF00B456A0 /* lightTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = E8E9EFC128F54ECA00B456A0 /* lightTheme.json */; };
 		E8E9EFD228F5556500B456A0 /* cardlocalisation.json in Resources */ = {isa = PBXBuildFile; fileRef = E8E9EFD128F5556500B456A0 /* cardlocalisation.json */; };
 		E8E9EFD628F557D000B456A0 /* darkTheme.json in Resources */ = {isa = PBXBuildFile; fileRef = E8E9EFD528F557D000B456A0 /* darkTheme.json */; };
+		E8E9EFE528F69ACB00B456A0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFDB28F69ACA00B456A0 /* NetworkManager.swift */; };
+		E8E9EFE628F69ACB00B456A0 /* TapCardDataConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFDD28F69ACA00B456A0 /* TapCardDataConfiguration.swift */; };
+		E8E9EFE728F69ACB00B456A0 /* TapCardForumLocalisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFDE28F69ACA00B456A0 /* TapCardForumLocalisation.swift */; };
+		E8E9EFE828F69ACB00B456A0 /* CardFieldsValidity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFDF28F69ACA00B456A0 /* CardFieldsValidity.swift */; };
+		E8E9EFE928F69ACB00B456A0 /* TapCardForumTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFE028F69ACA00B456A0 /* TapCardForumTheme.swift */; };
+		E8E9EFEA28F69ACB00B456A0 /* NetworkManager+HandlingResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFE228F69ACA00B456A0 /* NetworkManager+HandlingResponses.swift */; };
+		E8E9EFEB28F69ACB00B456A0 /* NetworkManagerApiCallsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFE328F69ACA00B456A0 /* NetworkManagerApiCallsExtension.swift */; };
+		E8E9EFEC28F69ACB00B456A0 /* TapCallsResponseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFE428F69ACA00B456A0 /* TapCallsResponseGenerator.swift */; };
+		E8E9EFEF28F69B1D00B456A0 /* NetworkManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFED28F69B1D00B456A0 /* NetworkManagerExtension.swift */; };
+		E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFEE28F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift */; };
+		E8E9EFF328F69C8100B456A0 /* TapCardForumConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */; };
+		E8E9EFF528F69E1700B456A0 /* CardKitConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF428F69E1700B456A0 /* CardKitConfigurationViewController.swift */; };
+		E8E9EFF828F6AB2F00B456A0 /* CardFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */; };
 		FCC7A63D906FE55991C00D35 /* Pods_MawaridCardExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB9C34B423A9DB6AA8B888 /* Pods_MawaridCardExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +90,19 @@
 		E8E9EFC128F54ECA00B456A0 /* lightTheme.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lightTheme.json; sourceTree = "<group>"; };
 		E8E9EFD128F5556500B456A0 /* cardlocalisation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cardlocalisation.json; sourceTree = "<group>"; };
 		E8E9EFD528F557D000B456A0 /* darkTheme.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = darkTheme.json; sourceTree = "<group>"; };
+		E8E9EFDB28F69ACA00B456A0 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E8E9EFDD28F69ACA00B456A0 /* TapCardDataConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardDataConfiguration.swift; sourceTree = "<group>"; };
+		E8E9EFDE28F69ACA00B456A0 /* TapCardForumLocalisation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardForumLocalisation.swift; sourceTree = "<group>"; };
+		E8E9EFDF28F69ACA00B456A0 /* CardFieldsValidity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardFieldsValidity.swift; sourceTree = "<group>"; };
+		E8E9EFE028F69ACA00B456A0 /* TapCardForumTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardForumTheme.swift; sourceTree = "<group>"; };
+		E8E9EFE228F69ACA00B456A0 /* NetworkManager+HandlingResponses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkManager+HandlingResponses.swift"; sourceTree = "<group>"; };
+		E8E9EFE328F69ACA00B456A0 /* NetworkManagerApiCallsExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManagerApiCallsExtension.swift; sourceTree = "<group>"; };
+		E8E9EFE428F69ACA00B456A0 /* TapCallsResponseGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCallsResponseGenerator.swift; sourceTree = "<group>"; };
+		E8E9EFED28F69B1D00B456A0 /* NetworkManagerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManagerExtension.swift; sourceTree = "<group>"; };
+		E8E9EFEE28F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TapCheckout+WebPaymentHandler.swift"; sourceTree = "<group>"; };
+		E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapCardForumConfiguration.swift; sourceTree = "<group>"; };
+		E8E9EFF428F69E1700B456A0 /* CardKitConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardKitConfigurationViewController.swift; sourceTree = "<group>"; };
+		E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +171,7 @@
 		E8E9EF9628F5415D00B456A0 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				E8E9EFDA28F69ACA00B456A0 /* Network */,
 				E8E9EF9928F5416F00B456A0 /* Private */,
 				E8E9EF9828F5416900B456A0 /* Public */,
 			);
@@ -163,6 +190,7 @@
 		E8E9EF9828F5416900B456A0 /* Public */ = {
 			isa = PBXGroup;
 			children = (
+				E8E9EFF128F69C7800B456A0 /* Interfaces */,
 				E8E9EF9E28F541A300B456A0 /* Views */,
 			);
 			path = Public;
@@ -171,8 +199,11 @@
 		E8E9EF9928F5416F00B456A0 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				E8E9EFF628F6AB1C00B456A0 /* ViewModels */,
 				E8E9EFD728F56CE200B456A0 /* Views */,
 				E8E9EFBF28F54B0E00B456A0 /* Extensions.swift */,
+				E8E9EFED28F69B1D00B456A0 /* NetworkManagerExtension.swift */,
+				E8E9EFEE28F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -198,6 +229,7 @@
 				E8E9EFC128F54ECA00B456A0 /* lightTheme.json */,
 				E8E9EFD128F5556500B456A0 /* cardlocalisation.json */,
 				E8E9EFD528F557D000B456A0 /* darkTheme.json */,
+				E8E9EFF428F69E1700B456A0 /* CardKitConfigurationViewController.swift */,
 			);
 			path = MawaridCardExample;
 			sourceTree = "<group>";
@@ -216,6 +248,53 @@
 			children = (
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E8E9EFDA28F69ACA00B456A0 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFDB28F69ACA00B456A0 /* NetworkManager.swift */,
+				E8E9EFDC28F69ACA00B456A0 /* Models */,
+				E8E9EFE128F69ACA00B456A0 /* ApiCalls */,
+				E8E9EFE428F69ACA00B456A0 /* TapCallsResponseGenerator.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		E8E9EFDC28F69ACA00B456A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFDD28F69ACA00B456A0 /* TapCardDataConfiguration.swift */,
+				E8E9EFDE28F69ACA00B456A0 /* TapCardForumLocalisation.swift */,
+				E8E9EFDF28F69ACA00B456A0 /* CardFieldsValidity.swift */,
+				E8E9EFE028F69ACA00B456A0 /* TapCardForumTheme.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E8E9EFE128F69ACA00B456A0 /* ApiCalls */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFE228F69ACA00B456A0 /* NetworkManager+HandlingResponses.swift */,
+				E8E9EFE328F69ACA00B456A0 /* NetworkManagerApiCallsExtension.swift */,
+			);
+			path = ApiCalls;
+			sourceTree = "<group>";
+		};
+		E8E9EFF128F69C7800B456A0 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFF228F69C8100B456A0 /* TapCardForumConfiguration.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		E8E9EFF628F6AB1C00B456A0 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E8E9EFF728F6AB2F00B456A0 /* CardFormViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -403,9 +482,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E9EFF328F69C8100B456A0 /* TapCardForumConfiguration.swift in Sources */,
+				E8E9EFEA28F69ACB00B456A0 /* NetworkManager+HandlingResponses.swift in Sources */,
+				E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */,
+				E8E9EFEC28F69ACB00B456A0 /* TapCallsResponseGenerator.swift in Sources */,
+				E8E9EFEF28F69B1D00B456A0 /* NetworkManagerExtension.swift in Sources */,
+				E8E9EFE528F69ACB00B456A0 /* NetworkManager.swift in Sources */,
+				E8E9EFE828F69ACB00B456A0 /* CardFieldsValidity.swift in Sources */,
 				E8E9EF9B28F5419200B456A0 /* MawaridCardView.swift in Sources */,
+				E8E9EFE628F69ACB00B456A0 /* TapCardDataConfiguration.swift in Sources */,
+				E8E9EFEB28F69ACB00B456A0 /* NetworkManagerApiCallsExtension.swift in Sources */,
 				E8E9EFC028F54B0E00B456A0 /* Extensions.swift in Sources */,
+				E8E9EFE928F69ACB00B456A0 /* TapCardForumTheme.swift in Sources */,
 				E8E9EF8F28F5413300B456A0 /* card_mawarid_iOS.docc in Sources */,
+				E8E9EFE728F69ACB00B456A0 /* TapCardForumLocalisation.swift in Sources */,
+				E8E9EFF828F6AB2F00B456A0 /* CardFormViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8E9EFF528F69E1700B456A0 /* CardKitConfigurationViewController.swift in Sources */,
 				E8E9EFAC28F549B600B456A0 /* ViewController.swift in Sources */,
 				E8E9EFA828F549B600B456A0 /* AppDelegate.swift in Sources */,
 				E8E9EFAA28F549B600B456A0 /* SceneDelegate.swift in Sources */,

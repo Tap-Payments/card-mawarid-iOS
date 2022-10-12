@@ -8,6 +8,7 @@
 import UIKit
 import TapThemeManager2020
 import LocalisationManagerKit_iOS
+import card_mawarid_iOS
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,9 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        TapThemeManager.setDefaultTapTheme(lightModeJSONTheme: "lightTheme", darkModeJSONTheme: "darkTheme")
-        TapLocalisationManager.shared.configureLocalisation(with: Bundle.main.url(forResource: "cardlocalisation", withExtension: "json"), or: nil, from: .LocalJsonFile)
-        TapLocalisationManager.shared.localisationLocale = "ar"
+        
         return true
     }
 

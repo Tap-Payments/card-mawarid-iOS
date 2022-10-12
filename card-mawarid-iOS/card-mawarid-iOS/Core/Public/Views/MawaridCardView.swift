@@ -10,6 +10,9 @@ import TapThemeManager2020
 import LocalisationManagerKit_iOS
 import CommonDataModelsKit_iOS
 import SwiftyPickerPopover
+import TapUIKit_iOS
+import TapCardVlidatorKit_iOS
+
 /// The UI for collecting the card data
 @objc public class MawaridCardView: UIView {
 
@@ -36,6 +39,23 @@ import SwiftyPickerPopover
     private var lastUserInterfaceStyle:UIUserInterfaceStyle = .light
     /// Holds the state of save card checkbox
     internal var isSaveCardChecked:Bool = false
+    /// Represents the data source for the card brands bar
+    internal var dataSource:[CardBrand] {
+        var totalBrands:[CardBrand] = []
+        
+        sharedNetworkManager.dataConfig.paymentOptions?.forEach({ option in
+            var optionBrands:[CardBrand] = []
+            optionBrands.append(option.brand)
+            optionBrands.append(contentsOf: option.supportedCardBrands)
+            
+            totalBrands.append(contentsOf: optionBrands.filter{ !totalBrands.contains($0) })
+        })
+        
+        return totalBrands
+    }
+    
+    
+    
     //MARK: UIView outlets
     /// The view that holds all sub views
     @IBOutlet var contentView: UIView!
@@ -99,8 +119,14 @@ import SwiftyPickerPopover
     private func commonInit() {
         self.contentView = setupXIB()
         matchThemeAttributes()
+        setBrandsForValidator()
     }
     
+    
+    /// Sets the allowed card brands for the validator so he knows exactly what are we validating against
+    internal func setBrandsForValidator() {
+        
+    }
     
     /// The method that deals with mapping and applying the theming attributes to the different fields
     internal func matchThemeAttributes() {
@@ -160,6 +186,24 @@ import SwiftyPickerPopover
     /// Helper method to set the font for all text fields
     internal func setFonts() {
         cardFields.forEach{ $0.tap_theme_font = ThemeFontSelector.init(stringLiteral: "\(themePath).textFields.font",shouldLocalise: true) }
+        cardFields.forEach{ $0.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged) }
+
+    }
+    
+    /// Helper method to set the delegates for all text fields
+    internal func setDelegates() {
+        // Listen to text changes
+        cardFields.forEach{ $0.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged) }
+        
+    }
+    
+    /// Handles the logic needed to be performed upong text changes in one of the card form text fields
+    @objc internal func textFieldDidChange(_ textField: UITextField) {
+        // We need to know which text field it is, to perform the correct post changes logic
+        print(textField.text ?? "")
+        if textField == cardNumberTextField {
+            cardNumberTextField.text = correctText(cardNumber: cardNumberTextField.text)
+        }
     }
     
     
@@ -199,14 +243,13 @@ import SwiftyPickerPopover
         lastUserInterfaceStyle = self.traitCollection.userInterfaceStyle
         matchThemeAttributes()
     }
-    
-    /*
-     
-     // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
+}
 
+
+extension MawaridCardView: UITextFieldDelegate {
+    
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return true
+    }
+    
 }
