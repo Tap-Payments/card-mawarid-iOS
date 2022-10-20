@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "card-mawarid-iOS"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "Card kit for Mawarid by Tap Payments"
 
   # This description is used to generate tags and improve search results.
@@ -104,7 +104,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.resource  = "icon.png"
-  spec.resources = "card-mawarid-iOS/card-mawarid-iOS/Core/Assets/**/*.{json,xib,pdf,png,gif}"
+  spec.resources = "card-mawarid-iOS/card-mawarid-iOS/Assets/**/*.{json,xib,pdf,png,gif}"
 
   # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
