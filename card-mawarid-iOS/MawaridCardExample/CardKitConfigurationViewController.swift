@@ -11,13 +11,19 @@ import BottomSheet
 class CardKitConfigurationViewController: UIViewController {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var loader: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        configureSDK()
+        loader.isHidden = true
     }
     
+    
+    @IBAction func showTheCardClicked(_ sender: Any) {
+        loader.isHidden = false
+        configureSDK()
+    }
     
     private func configureSDK() {
         loadingIndicator.isHidden = false
