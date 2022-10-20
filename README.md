@@ -1,8 +1,8 @@
-# Brief
+# Brief
 
 A dedicated card collection UIView for Mawarid, while being PCI compliant.
 
-# Requirements
+# Requirements
 
 1. Swift 4.0+
   
@@ -17,7 +17,7 @@ You can install with cocoapods by adding this `card-mawarid-iOS` to the pod file
 pod install
 ```
 
-# Adding UIView
+# Adding UIView
 
 1. From `storyboard` you can drag and drop a `UIView`.
   
@@ -61,7 +61,7 @@ let cardDataConfig:TapCardDataConfiguration = .init(sdkMode: .sandbox, localeIde
         
 ```
 
-# Tokenization
+# Tokenization
 
 On demand, you can start the tokenzation process.
 
@@ -80,7 +80,7 @@ mawaridCardView.tokenizeCard { [weak self] token in
         }
 ```
 
-# MawaridCardDelegate
+# MawaridCardDelegate
 
 The pod utilises the protocol scheme to passback callbacks for special events.
 
@@ -108,11 +108,11 @@ extension ViewController:MawaridCardDelegate {
 }
 ```
 
-# Theme & Localisation
+# Theme & Localisation
 
 Please add the following files to the main bundle of the project:
 
-### lightTheme.json
+## lightTheme.json
 
 ```json
 {
@@ -142,7 +142,7 @@ Please add the following files to the main bundle of the project:
 }
 ```
 
-### darkTheme.json
+## darkTheme.json
 
 ```json
 {
@@ -172,7 +172,7 @@ Please add the following files to the main bundle of the project:
 }
 ```
 
-### cardlocalisation.json
+## cardlocalisation.json
 
 ```json
 {
@@ -199,6 +199,6 @@ Please add the following files to the main bundle of the project:
 }
 ```
 
-Example project
+# Example project
 
 please download the example project at [GitHub - Tap-Payments/card-mawarid-iOS](https://github.com/Tap-Payments/card-mawarid-iOS)
