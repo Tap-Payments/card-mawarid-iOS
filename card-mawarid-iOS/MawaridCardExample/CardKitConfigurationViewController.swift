@@ -7,7 +7,7 @@
 
 import UIKit
 import card_mawarid_iOS
-
+import BottomSheet
 class CardKitConfigurationViewController: UIViewController {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -27,7 +27,13 @@ class CardKitConfigurationViewController: UIViewController {
         TapCardForumConfiguration.shared.configure(dataConfig: cardDataConfig,customTheme: .init(with: "lightTheme", and: "darkTheme", from: .LocalJsonFile),customLocalisation: .init(with: Bundle.main.url(forResource: "cardlocalisation", withExtension: "json"), from: .LocalJsonFile, shouldFlip: false, localeIdentifier: "en"), transactionCurrency: .SAR) {
             DispatchQueue.main.async { [weak self] in
                 self?.loadingIndicator.isHidden = true
-                self?.navigationController?.pushViewController(self?.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! ViewController, animated: true)
+                
+                let viewController:ViewController = self?.storyboard?.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+                
+                self?.presentBottomSheetInsideNavigationController(
+                    viewController: viewController,
+                    configuration: .default
+                )
             }
         } onErrorOccured: { error in
             DispatchQueue.main.async { [weak self] in

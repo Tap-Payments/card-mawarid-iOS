@@ -15,13 +15,21 @@ class ViewController: UIViewController {
     @IBOutlet weak var mawaridCardView: MawaridCardView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
-    @IBOutlet weak var eventsTextView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         mawaridCardView.presentingViewController = self
         mawaridCardView.delegate = self
         loadingIndicator.isHidden = true
+    }
+    
+    public override var preferredContentSize: CGSize {
+        get {
+            return CGSize(width: self.view.frame.width,
+                          height: 400)
+        }
+        
+        set { super.preferredContentSize = newValue }
     }
     
     @IBAction func tokenizeClicked(_ sender: Any) {
@@ -52,21 +60,26 @@ class ViewController: UIViewController {
 
 
 extension ViewController:MawaridCardDelegate {
+    func saveCardCheckBoxChanged(to: Bool) {
+        //eventsTextView.text = "\(eventsTextView.text ?? "")\n\(to)"
+    }
+    
     func errorOccured(with error: CardKitErrorType, message: String) {
-        eventsTextView.text = "\(eventsTextView.text ?? "")\n\(error.description) -- \(message)"
+        //eventsTextView.text = "\(eventsTextView.text ?? "")\n\(error.description) -- \(message)"
     }
     
     func eventHappened(with event: CardKitEventType) {
-        eventsTextView.text = "\(eventsTextView.text ?? "")\n\(event.description)"
+        //eventsTextView.text = "\(eventsTextView.text ?? "")\n\(event.description)"
     }
     
     func cardValidationStatusChanged(to: CardKitValidationStatusEnum) {
         switch to {
         case .Valid:
-            eventsTextView.text = "\(eventsTextView.text ?? "")\nCard Form is : VALID"
+            //eventsTextView.text = "\(eventsTextView.text ?? "")\nCard Form is : VALID"
             print("VALID")
         case .Invalid:
-            eventsTextView.text = "\(eventsTextView.text ?? "")\nCard Form is : INVALID"
+            print("IN VALID")
+            //eventsTextView.text = "\(eventsTextView.text ?? "")\nCard Form is : INVALID"
         }
     }
     

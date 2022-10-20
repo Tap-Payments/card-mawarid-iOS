@@ -41,6 +41,7 @@
 		E8E9EFFB28F6C46900B456A0 /* CardKitValidationStatusEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFA28F6C46900B456A0 /* CardKitValidationStatusEnum.swift */; };
 		E8E9EFFD28F6C5BB00B456A0 /* CardForm+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFC28F6C5BB00B456A0 /* CardForm+Protocol.swift */; };
 		E8E9EFFF28F6CABD00B456A0 /* CardForm+Interfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EFFE28F6CABD00B456A0 /* CardForm+Interfaces.swift */; };
+		E8ECE19D28FFFD1A00B9B9C3 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = E8ECE19C28FFFD1A00B9B9C3 /* BottomSheet */; };
 		FCC7A63D906FE55991C00D35 /* Pods_MawaridCardExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50FB9C34B423A9DB6AA8B888 /* Pods_MawaridCardExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8E9EFBA28F54A7B00B456A0 /* card_mawarid_iOS.framework in Frameworks */,
+				E8ECE19D28FFFD1A00B9B9C3 /* BottomSheet in Frameworks */,
 				FCC7A63D906FE55991C00D35 /* Pods_MawaridCardExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +366,9 @@
 				E8E9EFBD28F54A7B00B456A0 /* PBXTargetDependency */,
 			);
 			name = MawaridCardExample;
+			packageProductDependencies = (
+				E8ECE19C28FFFD1A00B9B9C3 /* BottomSheet */,
+			);
 			productName = MawaridCardExample;
 			productReference = E8E9EFA528F549B600B456A0 /* MawaridCardExample.app */;
 			productType = "com.apple.product-type.application";
@@ -395,6 +400,9 @@
 				Base,
 			);
 			mainGroup = E8E9EF8028F5413300B456A0;
+			packageReferences = (
+				E8ECE19B28FFFD1A00B9B9C3 /* XCRemoteSwiftPackageReference "BottomSheet" */,
+			);
 			productRefGroup = E8E9EF8B28F5413300B456A0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -835,6 +843,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E8ECE19B28FFFD1A00B9B9C3 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/joomcode/BottomSheet";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E8ECE19C28FFFD1A00B9B9C3 /* BottomSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8ECE19B28FFFD1A00B9B9C3 /* XCRemoteSwiftPackageReference "BottomSheet" */;
+			productName = BottomSheet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E8E9EF8128F5413300B456A0 /* Project object */;
 }
