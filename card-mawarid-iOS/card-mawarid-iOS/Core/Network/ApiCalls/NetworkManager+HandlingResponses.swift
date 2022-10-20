@@ -27,10 +27,16 @@ extension NetworkManager {
      Handles the response of init api call. Stores the data for further access
      - Parameter initModel: The init response model from the latest INIT api call
      */
-    func handleInitResponse(initModel: TapInitResponseModel) {
-        
-        sharedNetworkManager.dataConfig.sdkSettings = initModel.data
-        sharedNetworkManager.dataConfig.paymentOptions = initModel.cardPaymentOptions.paymentOptions        
+    func handleInitResponse(initModel: SDKSettingsMawarid) {
+        sharedNetworkManager.dataConfig.sdkSettings = initModel
+    }
+    
+    /**
+     Handles the response of payment options api call. Stores the data for further access
+     - Parameter paymentOptionsModel: The payment otions response model from the latest payment options api call
+     */
+    func handlePaymentOptionsResponse(paymentOptionsModel: TapPaymentOptionsReponseModel) {
+        sharedNetworkManager.dataConfig.paymentOptions = paymentOptionsModel.paymentOptions
         sharedNetworkManager.dataConfig.paymentOptions = sharedNetworkManager.dataConfig.paymentOptions?.filter { ($0.paymentType == .Card && $0.supportedCurrencies.contains(sharedNetworkManager.dataConfig.transactionCurrency)) }
     }
     

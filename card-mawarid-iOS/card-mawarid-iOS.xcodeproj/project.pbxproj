@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6750A21B6B05C87D0382B8DE /* Pods_card_mawarid_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A3D31041182ADA411F183A /* Pods_card_mawarid_iOS.framework */; };
+		E866FB5E2901DB2800C14E36 /* SDKSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E866FB5D2901DB2800C14E36 /* SDKSettings.swift */; };
 		E8E9EF8F28F5413300B456A0 /* card_mawarid_iOS.docc in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EF8E28F5413300B456A0 /* card_mawarid_iOS.docc */; };
 		E8E9EF9028F5413300B456A0 /* card_mawarid_iOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E8E9EF8D28F5413300B456A0 /* card_mawarid_iOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E8E9EF9B28F5419200B456A0 /* MawaridCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E9EF9A28F5419100B456A0 /* MawaridCardView.swift */; };
@@ -75,6 +76,7 @@
 		4A5F80ECC1F5C9C708237BA5 /* Pods-MawaridCardExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MawaridCardExample.release.xcconfig"; path = "Target Support Files/Pods-MawaridCardExample/Pods-MawaridCardExample.release.xcconfig"; sourceTree = "<group>"; };
 		50FB9C34B423A9DB6AA8B888 /* Pods_MawaridCardExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MawaridCardExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC95800BC35FD603892299E6 /* Pods-MawaridCardExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MawaridCardExample.debug.xcconfig"; path = "Target Support Files/Pods-MawaridCardExample/Pods-MawaridCardExample.debug.xcconfig"; sourceTree = "<group>"; };
+		E866FB5D2901DB2800C14E36 /* SDKSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKSettings.swift; sourceTree = "<group>"; };
 		E8E9EF8A28F5413300B456A0 /* card_mawarid_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = card_mawarid_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E9EF8D28F5413300B456A0 /* card_mawarid_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = card_mawarid_iOS.h; sourceTree = "<group>"; };
 		E8E9EF8E28F5413300B456A0 /* card_mawarid_iOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = card_mawarid_iOS.docc; sourceTree = "<group>"; };
@@ -143,6 +145,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E866FB5C2901DB1D00C14E36 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E866FB5D2901DB2800C14E36 /* SDKSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E8E9EF8028F5413300B456A0 = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +215,7 @@
 		E8E9EF9928F5416F00B456A0 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				E866FB5C2901DB1D00C14E36 /* Models */,
 				E8E9EFF628F6AB1C00B456A0 /* ViewModels */,
 				E8E9EFD728F56CE200B456A0 /* Views */,
 				E8E9EFBF28F54B0E00B456A0 /* Extensions.swift */,
@@ -506,6 +517,7 @@
 				E8E9EFF328F69C8100B456A0 /* TapCardForumConfiguration.swift in Sources */,
 				E8E9EFFF28F6CABD00B456A0 /* CardForm+Interfaces.swift in Sources */,
 				E8E9EFEA28F69ACB00B456A0 /* NetworkManager+HandlingResponses.swift in Sources */,
+				E866FB5E2901DB2800C14E36 /* SDKSettings.swift in Sources */,
 				E8E9EFF028F69B1D00B456A0 /* TapCheckout+WebPaymentHandler.swift in Sources */,
 				E8E9EFEC28F69ACB00B456A0 /* TapCallsResponseGenerator.swift in Sources */,
 				E8E9EFFD28F6C5BB00B456A0 /* CardForm+Protocol.swift in Sources */,

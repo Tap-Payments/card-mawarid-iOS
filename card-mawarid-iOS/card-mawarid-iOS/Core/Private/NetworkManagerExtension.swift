@@ -34,7 +34,7 @@ internal extension NetworkManager {
             Constants.HTTPHeaderKey.contentTypeHeaderName: Constants.HTTPHeaderValueKey.jsonContentTypeHeaderValue
         ]
         
-        if let sessionToken = sharedNetworkManager.dataConfig.sdkSettings?.sessionToken, !sessionToken.isEmpty {
+        if let sessionToken = sharedNetworkManager.dataConfig.sdkSettings?.data?.sessionToken, !sessionToken.isEmpty {
             
             result[Constants.HTTPHeaderKey.sessionToken] = sessionToken
         }

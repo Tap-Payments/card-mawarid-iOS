@@ -38,6 +38,7 @@ import LocalisationManagerKit_iOS
             SharedCommongDataModels.sharedCommongDataModels.sdkMode = sdkMode
         }
     }
+    internal var merchantID:String = ""
     /// The ISO 639-1 Code language identefier, please note if the passed locale is wrong or not found in the localisation files, we will show the keys instead of the values
     internal var localeIdentifier:String = "en"{
         didSet{
@@ -56,7 +57,7 @@ import LocalisationManagerKit_iOS
     /// Should we always ask for 3ds while saving the card. Default is true
     internal var enfroce3DS:Bool = true
     /// Holding the latest init response model to fetch requierd data when needed like session token or encryption key
-    internal var sdkSettings:SDKSettings?
+    internal var sdkSettings:SDKSettingsMawarid?
     /// Holding the allowed card brands to process for the logged in merchant
     internal var paymentOptions:[PaymentOption]?
     

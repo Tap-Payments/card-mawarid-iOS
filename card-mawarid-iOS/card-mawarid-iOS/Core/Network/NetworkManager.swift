@@ -29,7 +29,7 @@ internal class NetworkManager: NSObject {
     }
     private var networkManager: TapNetworkManager
     /// The server base url
-    private let baseURL = "https://checkout-mw-java.dev.tap.company/api/"
+    private let baseURL = "https://api.tap.company/v2/"
     /// Defines if loging api calls to server
     internal var enableLogging = false
     /// Defines if logging apu calls to console
@@ -92,7 +92,7 @@ internal class NetworkManager: NSObject {
         networkManager.consolePrintLoggingEnabled   = consoleLogging
         
         // Group all the configurations and pass it to the network manager
-        let requestOperation = TapNetworkRequestOperation(path: "\(baseURL)\(routing.rawValue)", method: httpMethod, headers: headers, urlModel: urlModel, bodyModel: body, responseType: .json)
+        let requestOperation = TapNetworkRequestOperation(path: "\(baseURL)\(routing.rawValue.replacingOccurrences(of: "checkout/", with: ""))", method: httpMethod, headers: headers, urlModel: urlModel, bodyModel: body, responseType: .json)
         delegate?.apiCallInProgress(status: true)
         // Perform the actual request
         networkManager.performRequest(requestOperation, completion: { [weak self] (session, result, error) in

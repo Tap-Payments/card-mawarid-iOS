@@ -48,14 +48,18 @@ import CommonDataModelsKit_iOS
      - Parameter cusomTheme: The theme object which contains the path to the local or to the remote custom light and dark themes. Optional
      - Parameter customLocalisation: The localisation object which contains the path to the local or to the remote custom localisation files. Optional
      - Parameter transactionCurrency: The currency you want to show the card brands that accepts it. Default is KWD
+     - Parameter merchantID: The tap merchant id.
+     - Parameter customer: Tap customer if any.
      - Parameter onCheckoutRead: A block to execure upon completion
      - Parameter onErrorOccured: A block to execure upon error
      */
-    @objc public func configure(dataConfig: TapCardDataConfiguration, customTheme: TapCardForumTheme? = nil, customLocalisation: TapCardForumLocalisation? = nil,transactionCurrency:TapCurrencyCode = .SAR,onCheckOutReady: @escaping () -> () = {} ,onErrorOccured: @escaping(Error?)->() = {_ in}) {
+    @objc public func configure(dataConfig: TapCardDataConfiguration, customTheme: TapCardForumTheme? = nil, customLocalisation: TapCardForumLocalisation? = nil,transactionCurrency:TapCurrencyCode = .SAR, merchantID:String = "", customer:TapCustomer? = nil, onCheckOutReady: @escaping () -> () = {} ,onErrorOccured: @escaping(Error?)->() = {_ in}) {
         self.dataConfig = dataConfig
         self.customTheme = customTheme
         self.customLocalisation = customLocalisation
         sharedNetworkManager.dataConfig.transactionCurrency = transactionCurrency
+        sharedNetworkManager.dataConfig.merchantID = merchantID
+        sharedNetworkManager.dataConfig.transactionCustomer = customer
         configureSDK(onCheckOutReady: onCheckOutReady, onErrorOccured: onErrorOccured)
     }
     
@@ -68,7 +72,7 @@ import CommonDataModelsKit_iOS
         // Store the configueation data for further access
         sharedNetworkManager.dataConfig = nonNullDataConfig
         // Infotm the network manager to init itself from the init api
-        sharedNetworkManager.configSDK(onCheckOutReady: onCheckOutReady, onErrorOccured: onErrorOccured)
+        sharedNetworkManager.initialiseSDKFromAPI(onCheckOutReady: onCheckOutReady, onErrorOccured: onErrorOccured)
     }
     
     

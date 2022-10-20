@@ -49,13 +49,37 @@ internal extension NetworkManager {
     /// - Parameter onErrorOccured: A block to execure upon error
     func initialiseSDKFromAPI(onCheckOutReady: @escaping () -> () = {} ,onErrorOccured: @escaping(Error?)->() = {_ in}) {
         // As per the backend logic, we will have to hit INIT
-        sharedNetworkManager.makeApiCall(routing: .InitAPI, resultType: TapInitResponseModel.self, httpMethod: .POST) { [weak self] (session, result, error) in
-            guard let initModel:TapInitResponseModel = result as? TapInitResponseModel else { self?.handleError(error: "Unexpected error when parsing into TapInitResponseModel")
+        sharedNetworkManager.makeApiCall(routing: .InitAPI, resultType: SDKSettingsMawarid.self, httpMethod: .GET) { [weak self] (session, result, error) in
+            guard let initModel:SDKSettingsMawarid = result as? SDKSettingsMawarid else { self?.handleError(error: "Unexpected error when parsing into TapInitResponseModel")
                 return }
             self?.handleInitResponse(initModel: initModel)
-            onCheckOutReady()
+            self?.callPaymentOptionsAPI(onCheckOutReady: onCheckOutReady)
         } onError: { (session, result, errorr) in
             onErrorOccured(errorr)
+            self.handleError(error: errorr)
+        }
+    }
+    
+    
+    /// Responsible for making the network call to payment options api
+    func callPaymentOptionsAPI(onCheckOutReady: @escaping () -> () = {}) {
+        // Create the payment option request with the configured data from the user
+        let paymentOptionRequest:TapPaymentOptionsRequestModel = .init(transactionMode: .cardTokenization, amount: 10, items: [.init(title: "Tokenize item", description: "Default item description", price: 10, quantity: 1, discount: nil)], shipping: nil, taxes: nil, currency: self.dataConfig.transactionCurrency, merchantID: self.dataConfig.merchantID, customer: self.dataConfig.transactionCustomer, destinationGroup: nil, paymentType: .All, totalAmount: 10, topup: nil, reference: nil)
+        
+        // Change the model into a dictionary
+        guard let bodyDictionary = NetworkManager.convertModelToDictionary(paymentOptionRequest, callingCompletionOnFailure: { error in
+            return
+        }) else { return }
+        
+        
+        
+        sharedNetworkManager.makeApiCall(routing: .PaymentOptionsAPI, resultType: TapPaymentOptionsReponseModel.self, body: .init(body: bodyDictionary), httpMethod: .POST) { [weak self] (session, result, error) in
+            guard let paymentOptionsResponse:TapPaymentOptionsReponseModel = result as? TapPaymentOptionsReponseModel else { self?.handleError(error: "Unexpected error when parsing TapPaymentOptionsReponseModel")
+                return }
+            // Let us now load the payment options
+            self?.handlePaymentOptionsResponse(paymentOptionsModel: paymentOptionsResponse)
+            onCheckOutReady()
+        } onError: { (session, result, errorr) in
             self.handleError(error: errorr)
         }
     }
@@ -76,7 +100,7 @@ internal extension NetworkManager {
         
         // Call the corresponding api based on the transaction mode
         // Perform the retrieve request with the computed data
-        sharedNetworkManager.makeApiCall(routing: cardTokenRequestModel.route, resultType: Token.self, body: .init(body: bodyDictionary),httpMethod: .POST, urlModel: .none) { (session, result, error) in
+        sharedNetworkManager.makeApiCall(routing: .tokens, resultType: Token.self, body: .init(body: bodyDictionary),httpMethod: .POST, urlModel: .none) { (session, result, error) in
             // Double check all went fine
             guard let parsedResponse:Token = result as? Token else {
                 onErrorOccured("Unexpected error parsing into token")
