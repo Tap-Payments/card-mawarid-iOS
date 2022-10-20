@@ -26,9 +26,9 @@ pod install
 3. Set the `height` to `330`.
   
 
-![](file:///Users/osamarabie/Desktop/Screen%20Shot%202022-10-20%20at%2011.00.04%20PM.png?msec=1666299613956)
+![](https://i.ibb.co/xC2PJcp/Screen-Shot-2022-10-20-at-11-00-04-PM.png)
 
-# Initialisation
+# Initialisation
 
 To init the card kit, you will need to pass required data `before` showing the card view.
 
