@@ -26,7 +26,7 @@ Pod::Spec.new do |spec|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = "The new era of mobile payments is here with Tap.The new era of mobile payments is here with Tap."
 
-  spec.homepage     = "https://github.com/Tap-Payments/CheckoutSDK-iOS"
+  spec.homepage     = "https://github.com/Tap-Payments/card-mawarid-iOS"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
