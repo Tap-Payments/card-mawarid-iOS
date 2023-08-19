@@ -17,9 +17,9 @@ var myContext = 0
     /// Represents the main holding view
     @IBOutlet var contentView: UIView!
     /// The view holding the webview used for theming like radius and shadows
-    @IBOutlet weak var webViewHolder: UIView!
+    @IBOutlet public weak var webViewHolder: UIView!
     /// Represents the actual backbone web view
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet public weak var webView: WKWebView!
     /// The progress bar to show a web view is being loaded
     @IBOutlet weak var progressView: UIProgressView!
     /// Displays a loading activity indicator for the user
@@ -35,6 +35,13 @@ var myContext = 0
             reload()
         }
     }
+    
+    @IBOutlet weak var webViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var webViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var webViewLeadingConstraint: NSLayoutConstraint!
+    
+    /// The button that will dismiss the whole TAP sheet
+    @IBOutlet weak var cancelButton: UIButton!
     
     // Mark:- Init methods
     override init(frame: CGRect) {
@@ -70,19 +77,25 @@ var myContext = 0
         
         webViewHeaderView.headerType = .WebViewTitle
         let loadingBudle:Bundle = Bundle.init(for: TapActionButton.self)
-        let imageData = try? Data(contentsOf: loadingBudle.url(forResource: "3sec-white-loader-2", withExtension: "gif")!)
+        let imageData = try? Data(contentsOf: loadingBudle.url(forResource: "Black-loader", withExtension: "gif")!)
         let gif = try! UIImage(gifData: imageData!)
         loadingGif.setGifImage(gif, loopCount: 100) // Will loop forever
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: &myContext)
         
         webViewHolder.clipsToBounds = false
         webView.clipsToBounds = true
-        webView.layer.cornerRadius = 8
+       /* webView.layer.cornerRadius = 8
         webViewHolder.layer.shadowColor = UIColor(white: 0, alpha: 0.15).cgColor
         webViewHolder.layer.shadowOpacity = 1
-        webViewHolder.layer.shadowRadius = 4
+        webViewHolder.layer.shadowRadius = 4*/
+        
+        applyTheme()
     }
     
+    /// Will be called when the close button is clicked
+    @IBAction func cancelButtonClicked(_ sender: Any) {
+        viewModel?.delegate?.webViewCanceled(showingFullScreen:viewModel?.shouldBeFullScreen ?? false)
+    }
     
     //observer
     public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -107,6 +120,7 @@ var myContext = 0
         guard let viewModel = viewModel else { return }
         webView.navigationDelegate = viewModel
         webViewHeaderView.isHidden = !viewModel.shouldShowHeaderView
+        //cancelButton.isHidden = !webViewHeaderView.isHidden
     }
 }
 
@@ -114,6 +128,7 @@ var myContext = 0
 extension TapWebView: TapWebViewDelegate {
     func updateHeaderView(with visibility: Bool) {
         webViewHeaderView.isHidden = !visibility
+        //cancelButton.isHidden = !webViewHeaderView.isHidden
     }
     
     func reloadWebView() {
@@ -127,5 +142,48 @@ extension TapWebView: TapWebViewDelegate {
         webView.stopLoading()
     }
     
+    func updateSize(with shouldBeFullScreen: Bool) {
+        webViewHolder.translatesAutoresizingMaskIntoConstraints = false
+        webViewLeadingConstraint.constant = 0
+        webViewTrailingConstraint.constant = 0
+        webViewTopConstraint.constant = -30
+        webView.layer.cornerRadius = 0
+        
+        DispatchQueue.main.async{
+            self.webView.layoutIfNeeded()
+            self.webView.updateConstraints()
+        }
+    }
+}
+
+
+
+// Mark:- Theme methods
+extension TapWebView {
+    /// Consolidated one point to apply all needed theme methods
+    public func applyTheme() {
+        matchThemeAttributes()
+    }
     
+    /// Match the UI attributes with the correct theming entries
+    private func matchThemeAttributes() {
+        let themePath:String = "merchantHeaderView"
+        cancelButton.tap_theme_setTitleColor(selector: .init(keyPath: "\(themePath).cancelButton.titleLabelColor"), forState: .normal)
+        cancelButton.tap_theme_tintColor = .init(keyPath: "\(themePath).cancelButton.titleLabelColor")
+        cancelButton.titleLabel?.tap_theme_font = .init(stringLiteral: "\(themePath).cancelButton.titleLabelFont")
+        cancelButton.layer.cornerRadius = 16
+        cancelButton.tap_theme_backgroundColor = .init(keyPath: "\(themePath).cancelButton.backgroundColor")
+        
+        cancelButton.setTitle("", for: .normal)
+        cancelButton.setImage(TapThemeManager.imageValue(for: "merchantHeaderView.closeCheckoutIcon"), for: .normal)
+        
+        layoutIfNeeded()
+    }
+    
+    /// Listen to light/dark mde changes and apply the correct theme based on the new style
+    override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        TapThemeManager.changeThemeDisplay(for: self.traitCollection.userInterfaceStyle)
+        applyTheme()
+    }
 }

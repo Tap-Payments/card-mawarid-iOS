@@ -5,15 +5,37 @@
 //  Created by Osama Rabie on 22/03/2022.
 //
 
+
 import Foundation
 import CoreTelephony
 import TapApplicationV2
-import LocalisationManagerKit_iOS
 import CommonDataModelsKit_iOS
 
 /// Extension to the network manager when needed. To keep the network manager class itself clean and readable
 internal extension NetworkManager {
     
+    
+    static var headersEncryptionPublicKey:String {
+        if TapCardForumConfiguration.shared.dataConfig?.sdkMode == .sandbox {
+            return """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC8AX++RtxPZFtns4XzXFlDIxPB
+h0umN4qRXZaKDIlb6a3MknaB7psJWmf2l+e4Cfh9b5tey/+rZqpQ065eXTZfGCAu
+BLt+fYLQBhLfjRpk8S6hlIzc1Kdjg65uqzMwcTd0p7I4KLwHk1I0oXzuEu53fU1L
+SZhWp4Mnd6wjVgXAsQIDAQAB
+-----END PUBLIC KEY-----
+"""
+        }else{
+            return  """
+-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC9hSRms7Ir1HmzdZxGXFYgmpi3
+ez7VBFje0f8wwrxYS9oVoBtN4iAt0DOs3DbeuqtueI31wtpFVUMGg8W7R0SbtkZd
+GzszQNqt/wyqxpDC9q+97XdXwkWQFA72s76ud7eMXQlsWKsvgwhY+Ywzt0KlpNC3
+Hj+N6UWFOYK98Xi+sQIDAQAB
+-----END PUBLIC KEY-----
+"""
+        }
+    }
     
     /// Static HTTP headers sent with each request. including device info, language and SDK secret keys
     static var staticHTTPHeaders: [String: String] {
@@ -29,19 +51,20 @@ internal extension NetworkManager {
         
         var result = [
             
-            Constants.HTTPHeaderKey.authorization: "Bearer \(secretKey)",
+            Constants.HTTPHeaderKey.authorization: "\(secretKey)",
             Constants.HTTPHeaderKey.application: applicationValue,
-            Constants.HTTPHeaderKey.contentTypeHeaderName: Constants.HTTPHeaderValueKey.jsonContentTypeHeaderValue
+            Constants.HTTPHeaderKey.contentTypeHeaderName: Constants.HTTPHeaderValueKey.jsonContentTypeHeaderValue,
+            Constants.HTTPHeaderKey.mdn: Crypter.encrypt(TapApplicationPlistInfo.shared.bundleIdentifier ?? "", using: NetworkManager.headersEncryptionPublicKey) ?? ""
         ]
         
-        if let sessionToken = sharedNetworkManager.dataConfig.sdkSettings?.data?.sessionToken, !sessionToken.isEmpty {
-            
-            result[Constants.HTTPHeaderKey.sessionToken] = sessionToken
-        }
+        /*if let sessionToken = TapCardForumConfiguration.shared.dataConfig?.initModel?.session, !sessionToken.isEmpty {
+         
+         result[Constants.HTTPHeaderKey.sessionToken] = sessionToken
+         }*/
         
-        if let middleWareToken = sharedNetworkManager.dataConfig.configModelResponse?.token {
+        if let middleWareToken = TapCardForumConfiguration.shared.dataConfig?.initModel?.session {
             
-            result[Constants.HTTPHeaderKey.token] = "Bearer \(middleWareToken)"
+            result[Constants.HTTPHeaderKey.token] = "\(middleWareToken)"
         }
         
         return result
@@ -52,7 +75,7 @@ internal extension NetworkManager {
         
         var applicationDetails = NetworkManager.applicationStaticDetails()
         
-        let localeIdentifier = TapLocalisationManager.shared.localisationLocale ?? "en"
+        let localeIdentifier = "en"
         
         applicationDetails[Constants.HTTPHeaderValueKey.appLocale] = localeIdentifier
         
@@ -71,7 +94,7 @@ internal extension NetworkManager {
      - Returns: The sandbox or production secret key based on the SDK mode
      */
     static func secretKey() -> String {
-        return (sharedNetworkManager.dataConfig.sdkMode == .sandbox) ?  sharedNetworkManager.dataConfig.secretKey.sandbox : sharedNetworkManager.dataConfig.secretKey.production
+        return (TapCardForumConfiguration.shared.dataConfig?.sdkMode == .sandbox) ? TapCardForumConfiguration.shared.dataConfig!.secretKey.sandbox : TapCardForumConfiguration.shared.dataConfig!.secretKey.production
     }
     
     
@@ -83,9 +106,9 @@ internal extension NetworkManager {
          fatalError("Application must have bundle identifier in order to use goSellSDK.")
          }*/
         
-        let bundleID = "tap.TapCardCheckoutExample"
+        let bundleID = TapApplicationPlistInfo.shared.bundleIdentifier ?? ""
         
-        let sdkPlistInfo = TapBundlePlistInfo(bundle: Bundle(for: NetworkManager.self))
+        let sdkPlistInfo = TapBundlePlistInfo(bundle: Bundle(for: TapCardForumConfiguration.self))
         
         guard let requirerVersion = sdkPlistInfo.shortVersionString, !requirerVersion.isEmpty else {
             
@@ -103,31 +126,23 @@ internal extension NetworkManager {
         var simNetWorkName:String? = ""
         var simCountryISO:String? = ""
         
-        if providers?.values.count ?? 0 > 0 {
-            providers?.values.forEach { carrier in
-                if let carrierName = carrier.carrierName {
-                    simNetWorkName = carrierName
-                }
-                if let isoCountryCode = carrier.isoCountryCode {
-                    simCountryISO = isoCountryCode
-                }
-            }
+        if providers?.values.count ?? 0 > 0, let carrier:CTCarrier = providers?.values.first {
+            simNetWorkName = carrier.carrierName
+            simCountryISO = carrier.isoCountryCode
         }
         
         
         let result: [String: String] = [
-            
-            Constants.HTTPHeaderValueKey.appID: bundleID,
-            Constants.HTTPHeaderValueKey.requirer: Constants.HTTPHeaderValueKey.requirerValue,
-            Constants.HTTPHeaderValueKey.requirerVersion: requirerVersion,
-            Constants.HTTPHeaderValueKey.requirerOS: osName,
-            Constants.HTTPHeaderValueKey.requirerOSVersion: osVersion,
-            Constants.HTTPHeaderValueKey.requirerDeviceName: deviceNameFiltered,
-            Constants.HTTPHeaderValueKey.requirerDeviceType: deviceType,
-            Constants.HTTPHeaderValueKey.requirerDeviceModel: deviceModel,
-            Constants.HTTPHeaderValueKey.requirerSimNetworkName: simNetWorkName ?? "",
-            Constants.HTTPHeaderValueKey.requirerSimCountryIso: simCountryISO ?? "",
-            Constants.HTTPHeaderValueKey.requirerDeviceManufacturer: "Apple",
+            Constants.HTTPHeaderValueKey.appID: Crypter.encrypt(bundleID, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirer: Crypter.encrypt(Constants.HTTPHeaderValueKey.requirerValue, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerVersion: Crypter.encrypt(requirerVersion, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerOS: Crypter.encrypt(osName, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerOSVersion: Crypter.encrypt(osVersion, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerDeviceName: Crypter.encrypt(deviceNameFiltered, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerDeviceType: Crypter.encrypt(deviceType, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerDeviceModel: Crypter.encrypt(deviceModel, using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerSimNetworkName: Crypter.encrypt(simNetWorkName ?? "", using: NetworkManager.headersEncryptionPublicKey) ?? "",
+            Constants.HTTPHeaderValueKey.requirerSimCountryIso: Crypter.encrypt(simCountryISO ?? "", using: NetworkManager.headersEncryptionPublicKey) ?? ""
         ]
         
         return result
@@ -146,32 +161,34 @@ internal extension NetworkManager {
         
         fileprivate struct HTTPHeaderKey {
             
-            fileprivate static let authorization    = "Authorization"
-            fileprivate static let application      = "application"
-            fileprivate static let sessionToken     = "session_token"
-            fileprivate static let contentTypeHeaderName        = "Content-Type"
-            fileprivate static let token                = "token"
+            fileprivate static let authorization            = "Authorization"
+            fileprivate static let application              = "application"
+            fileprivate static let sessionToken             = "session_token"
+            fileprivate static let contentTypeHeaderName    = "Content-Type"
+            fileprivate static let token                    = "session"
+            fileprivate static let mdn                      = "mdn"
             
             //@available(*, unavailable) private init() { }
         }
         
         fileprivate struct HTTPHeaderValueKey {
             
-            fileprivate static let appID                        = "app_id"
-            fileprivate static let appLocale                    = "app_locale"
-            fileprivate static let deviceID                     = "device_id"
-            fileprivate static let requirer                     = "requirer"
-            fileprivate static let requirerOS                   = "requirer_os"
-            fileprivate static let requirerOSVersion            = "requirer_os_version"
-            fileprivate static let requirerValue                = "SDK"
-            fileprivate static let requirerVersion              = "requirer_version"
-            fileprivate static let requirerDeviceName           = "requirer_device_name"
-            fileprivate static let requirerDeviceType           = "requirer_device_type"
-            fileprivate static let requirerDeviceModel          = "requirer_device_model"
-            fileprivate static let requirerSimNetworkName       = "requirer_sim_network_name"
-            fileprivate static let requirerSimCountryIso        = "requirer_sim_country_iso"
+            fileprivate static let appID                    = "cu"
+            fileprivate static let appLocale                = "al"
+            fileprivate static let appType                  = "at"
+            fileprivate static let deviceID                 = "device_id"
+            fileprivate static let requirer                 = "aid"
+            fileprivate static let requirerOS               = "ro"
+            fileprivate static let requirerOSVersion        = "rov"
+            fileprivate static let requirerValue            = "iOS-checkout-sdk"
+            fileprivate static let requirerVersion          = "av"
+            fileprivate static let requirerDeviceName       = "rn"
+            fileprivate static let requirerDeviceType       = "rt"
+            fileprivate static let requirerDeviceModel      = "rm"
+            fileprivate static let requirerSimNetworkName   = "rsn"
+            fileprivate static let requirerSimCountryIso    = "rsc"
+            
             fileprivate static let jsonContentTypeHeaderValue   = "application/json"
-            fileprivate static let requirerDeviceManufacturer   = "requirer_device_manufacturer"
             
             //@available(*, unavailable) private init() { }
         }

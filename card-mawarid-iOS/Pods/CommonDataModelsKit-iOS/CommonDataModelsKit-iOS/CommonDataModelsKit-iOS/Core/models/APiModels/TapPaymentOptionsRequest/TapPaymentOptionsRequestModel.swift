@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TapCardVlidatorKit_iOS
 
 public struct TapPaymentOptionsRequestModel {
     
@@ -15,6 +16,12 @@ public struct TapPaymentOptionsRequestModel {
     
     /// Transaction mode.
     public let transactionMode: TransactionMode?
+    
+    /// Allowed currencies
+    public let supportedCurrencies: [TapCurrencyCode]?
+    
+    /// Allowed payment methods
+    public let supportedPaymentMethods: [CardBrand]?
     
     /// Items to pay for.
     public var items: [ItemModel]?
@@ -53,7 +60,7 @@ public struct TapPaymentOptionsRequestModel {
     
     public init(customer: TapCustomer?) {
         
-        self.init(transactionMode: nil, amount: nil, items: nil, shipping: nil, taxes: nil, currency: nil, merchantID: nil, customer: customer, destinationGroup: nil, paymentType: .All, totalAmount: 0, topup:nil, reference:nil)
+        self.init(transactionMode: nil, amount: nil, items: nil, shipping: nil, taxes: nil, currency: nil, merchantID: nil, customer: customer, destinationGroup: nil, paymentType: .All, totalAmount: 0, topup:nil, reference:nil, supportedCurrencies: nil, supportedPaymentMethods: nil)
     }
     
     public init(transactionMode:      TransactionMode?,
@@ -68,7 +75,9 @@ public struct TapPaymentOptionsRequestModel {
                 paymentType:          TapPaymentType,
                 totalAmount:          Double,
                 topup:                Topup?,
-                reference:            Reference?
+                reference:            Reference?,
+                supportedCurrencies:    [TapCurrencyCode]?,
+                supportedPaymentMethods: [CardBrand]?
                 
     ) {
         
@@ -99,13 +108,16 @@ public struct TapPaymentOptionsRequestModel {
         }
         
         self.totalAmount = totalAmount
-        
+        // Set the suppored currencies
+        self.supportedCurrencies = supportedCurrencies
+        // Set the suppored payment methods
+        self.supportedPaymentMethods = supportedPaymentMethods
         // Create the order object with the payment options request data
         self.order = .init(transactionMode: transactionMode, amount: self.totalAmount, items: self.items, shipping: self.shipping, taxes: self.taxes, currency: self.currency, merchantID: self.merchantID, customer: self.customer, destinationGroup: self.destinationGroup, paymentType: self.paymentType, topup: self.topup, reference: self.reference)
         // We will stop passing items in the payment options and pass it in order object only
         self.items = []
         // We will not be sending customr info in the payment types anymore
-        self.customer = nil
+        //self.customer = nil
         // We will not be sending shipping info in the payment types anymore
         self.shipping = nil
         // We will not be sending tax info in the payment types anymore
@@ -129,6 +141,8 @@ public struct TapPaymentOptionsRequestModel {
         case topup                  = "topup"
         case reference              = "reference"
         case order                  = "order"
+        case supportedCurrencies        = "supported_currencies"
+        case supportedPaymentMethods    = "supported_payment_methods"
     }
     
     // MARK: Properties
@@ -154,7 +168,8 @@ extension TapPaymentOptionsRequestModel: Encodable {
         try container.encodeIfPresent(self.paymentType, forKey: .paymentType)
         try container.encodeIfPresent(self.order, forKey: .order)
         try container.encodeIfPresent(self.shipping, forKey: .shipping)
-        
+        try container.encodeIfPresent(self.supportedCurrencies, forKey: .supportedCurrencies)
+        try container.encodeIfPresent(self.supportedPaymentMethods, forKey: .supportedPaymentMethods)
         if self.taxes?.count ?? 0 > 0 {
             
             try container.encodeIfPresent(self.taxes, forKey: .taxes)

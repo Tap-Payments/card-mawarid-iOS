@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "card-mawarid-iOS"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "Card kit for Mawarid by Tap Payments"
 
   # This description is used to generate tags and improve search results.

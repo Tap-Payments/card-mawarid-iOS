@@ -5,6 +5,13 @@
 //  Copyright © 2019 Tap Payments. All rights reserved.
 //
 import Foundation
+import CommonDataModelsKit_iOS
+
+/// A delegate to listen to events fired from tap network manager
+public protocol TapNetworkManagerDelegate {
+    /// Inform the delegate that network manager wants to log a peice of info
+    func log(string:String)
+}
 
 /// Network Manager class.
 public class TapNetworkManager {
@@ -26,6 +33,10 @@ public class TapNetworkManager {
     
     /// Defines if you want to enable printing to the console the api calls as it go
     public var consolePrintLoggingEnabled = false
+    
+    /// A delegate to listen to events fired from tap network manager
+    public var delegate:TapNetworkManagerDelegate? = nil
+    
     
     /// Base URL.
     public private(set) var baseURL: URL
@@ -100,14 +111,16 @@ public class TapNetworkManager {
                 }
             }
             
+            
+            var loggString:String = "Request :\n========\n\(request.httpMethod ?? "") \(request.url?.absoluteString ?? "")\nHeaders :\n------\n\(String(data: try! JSONSerialization.data(withJSONObject: (request.allHTTPHeaderFields ?? [:]), options: .prettyPrinted), encoding: .utf8 )!)"
+            
+            if let body = request.httpBody {
+                loggString = "\(loggString)\nBody :\n-----\n\(String(data: try! JSONSerialization.data(withJSONObject: JSONSerialization.jsonObject(with: body, options: []), options: .prettyPrinted), encoding: .utf8 )!)\n---------------\n"
+            }else{
+                loggString = "\(loggString)\nBody :\n-----\n{\n}\n---------------\n"
+            }
+            delegate?.log(string: loggString)
             if consolePrintLoggingEnabled {
-                var loggString:String = "Request :\n========\n\(request.httpMethod ?? "") \(request.url?.absoluteString ?? "")\nHeaders :\n------\n\(String(data: try! JSONSerialization.data(withJSONObject: (request.allHTTPHeaderFields ?? [:]), options: .prettyPrinted), encoding: .utf8 )!)"
-                
-                if let body = request.httpBody {
-                    loggString = "\(loggString)\nBody :\n-----\n\(String(data: try! JSONSerialization.data(withJSONObject: JSONSerialization.jsonObject(with: body, options: []), options: .prettyPrinted), encoding: .utf8 )!)\n---------------\n"
-                }else{
-                    loggString = "\(loggString)\nBody :\n-----\n{\n}\n---------------\n"
-                }
                 print(loggString)
             }
             
@@ -141,30 +154,46 @@ public class TapNetworkManager {
             
             let loggString:String = "Response :\n========\n\(operation.httpMethod.rawValue) \(operation.path)\nHeaders :\n------\n\(headersString)\nBody :\n-----\n\(bodySting)\n---------------\n"
             
+            self.delegate?.log(string: loggString)
             if self.consolePrintLoggingEnabled {
                 print(loggString)
             }
             
+            // Check if error came in
             if let nonNullError = error {
+                self.delegate?.log(string: nonNullError.debugDescription)
                 // Failure case for network/api/internal
                 tapLoggingResponseModel = .init(headers: headersString, error_code: "Network/Internal", error_message: nonNullError.localizedDescription, error_description: nonNullError.debugDescription, body: bodySting)
                 
                 completion?(dataTask, nil, nonNullError)
             }else if let jsonObject = data {
-                do {
-                    let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: .fragmentsAllowed)
-                    let decodedResponse = try JSONDecoder().decode(codableType, from: jsonData)
-                    // Success case
-                    tapLoggingResponseModel = .init(headers: headersString, error_code: nil, error_message: nil, error_description: nil, body: bodySting)
-                    DispatchQueue.main.async {
-                        completion?(dataTask, decodedResponse, error)
-                    }
-                } catch {
+                // first check if the data coming in represents the new payment types api error before trying to parse the data into the expected model
+                if let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .fragmentsAllowed),
+                   let newErrorModel:ApiErrorModel = try? JSONDecoder().decode(ApiErrorModel.self, from: jsonData),
+                   let error:Error = newErrorModel.errors.first?.description {
+                    // Then the backend responded with a new error model we need to fail now :)
                     // Failure case serialization
                     tapLoggingResponseModel = .init(headers: headersString, error_code: "Serialization", error_message: error.localizedDescription, error_description: error.debugDescription, body: bodySting)
                     
                     DispatchQueue.main.async {
                         completion?(dataTask, jsonObject, error)
+                    }
+                }else{
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: .fragmentsAllowed)
+                        let decodedResponse = try JSONDecoder().decode(codableType, from: jsonData)
+                        // Success case
+                        tapLoggingResponseModel = .init(headers: headersString, error_code: nil, error_message: nil, error_description: nil, body: bodySting)
+                        DispatchQueue.main.async {
+                            completion?(dataTask, decodedResponse, error)
+                        }
+                    } catch {
+                        // Failure case serialization
+                        tapLoggingResponseModel = .init(headers: headersString, error_code: "Serialization", error_message: error.localizedDescription, error_description: error.debugDescription, body: bodySting)
+                        
+                        DispatchQueue.main.async {
+                            completion?(dataTask, jsonObject, error)
+                        }
                     }
                 }
             }else {
@@ -272,7 +301,7 @@ public class TapNetworkManager {
     private func requestContentTypeHeaderValue(for dataType: TapSerializationType) -> String {
         
         switch dataType {
-        
+            
         case .json:
             
             return Constants.jsonContentTypeHeaderValue

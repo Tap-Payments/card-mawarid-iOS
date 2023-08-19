@@ -27,8 +27,9 @@ extension NetworkManager {
      Handles the response of init api call. Stores the data for further access
      - Parameter initModel: The init response model from the latest INIT api call
      */
-    func handleInitResponse(initModel: SDKSettingsMawarid) {
-        sharedNetworkManager.dataConfig.sdkSettings = initModel
+    func handleInitResponse(initModel: TapInitResponseModel) {
+        sharedNetworkManager.dataConfig.initModel = initModel
+        sharedNetworkManager.dataConfig.sdkSettings = initModel.data
     }
     
     /**

@@ -31,6 +31,10 @@ import LocalisationManagerKit_iOS
     @IBOutlet weak var saveCardSwitch: UISwitch!
     /// A delegate to listen to events fired from the save card view
     @objc public var delegate:TapSaveCardViewDelegate?
+    /// A separator used whenever the save card for tap is not a floating view to seprate between then the upper view
+    @IBOutlet weak var separatorView: TapSeparatorView!
+    /// A seprator to seprate it from the bottom if feeeded
+    @IBOutlet weak var lowerTapSeparatorView: TapSeparatorView!
     
     internal let themePath:String = "inlineCard"
     // Mark:- Init methods
@@ -43,9 +47,20 @@ import LocalisationManagerKit_iOS
         super.init(coder: aDecoder)
         commonInit()
     }
-    
-    @IBAction func saveCardSwitchChanged(_ sender: Any) {
+    /// Fired when the save card switch status is changed
+    @IBAction public func saveCardSwitchChanged(_ sender: Any) {
         delegate?.saveCardChanged(for: .Merchant,to: saveCardSwitch.isOn)
+    }
+    
+    /// Will hide show the top separator view based in the given input
+    internal func changeSeparatorViewVisibilty(to:Bool) {
+        separatorView.isHidden = !to
+    }
+    
+    
+    /// Will hide show the bottom separator view based in the given input
+    internal func changeBottomSeparatorViewVisibilty(to:Bool) {
+        lowerTapSeparatorView.isHidden = !to
     }
     
     /// Used as a consolidated method to do all the needed steps upon creating the view

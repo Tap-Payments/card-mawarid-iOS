@@ -6,7 +6,8 @@
 //
 
 /// Token model.
-@objcMembers public final class Token: NSObject, IdentifiableWithString {
+@objcMembers
+@objc(CheckoutToken) public final class Token: NSObject, IdentifiableWithString {
     
     // MARK: - Public -
     // MARK: Properties
@@ -88,6 +89,23 @@ extension Token: Decodable {
                   clientIPAddress:  clientIPAddress,
                   isLiveMode:       isLiveMode,
                   isUsed:           isUsed)
+    }
+}
+
+
+
+// MARK: - Encodable
+extension Token: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(identifier, forKey: .identifier)
+        try container.encodeIfPresent(object, forKey: .object)
+        try container.encodeIfPresent(card, forKey: .card)
+        try container.encodeIfPresent(type.rawValue, forKey: .type)
+        try container.encodeIfPresent(creationDate, forKey: .creationDate)
+        try container.encodeIfPresent(clientIPAddress, forKey: .clientIPAddress)
+        try container.encodeIfPresent(isLiveMode, forKey: .isLiveMode)
+        try container.encodeIfPresent(isUsed, forKey: .isUsed)
     }
 }
 

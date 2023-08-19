@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomerContactDataCollectionView" customModule="TapUIKit_iOS" customModuleProvider="target">
             <connections>
+                <outlet property="arrowDownImageView" destination="X98-3Q-Vbj" id="v1j-JU-ojb"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="3Kz-nW-gy3"/>
                 <outlet property="emailTextField" destination="0O4-NQ-O0J" id="BAm-QF-MDA"/>
                 <outlet property="fieldsContainerView" destination="iIk-Hh-qDl" id="NeO-mO-xdj"/>
@@ -50,7 +51,7 @@
                                 <constraint firstAttribute="height" priority="750" constant="48" placeholder="YES" id="qAK-Rd-eKW"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="per-hg-tie">
                             <rect key="frame" x="0.0" y="49" width="439" height="49"/>
@@ -85,7 +86,7 @@
                                     </connections>
                                 </button>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="50 000 0000" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qF2-ho-fmS">
-                                    <rect key="frame" x="76.5" y="0.0" width="362.5" height="49"/>
+                                    <rect key="frame" x="76.5" y="15.5" width="362.5" height="18.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                 </textField>
@@ -93,10 +94,9 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="EeF-RR-YsO" secondAttribute="trailing" id="EVo-82-hGY"/>
-                                <constraint firstAttribute="bottom" secondItem="qF2-ho-fmS" secondAttribute="bottom" id="Ek7-JS-fey"/>
                                 <constraint firstItem="k1P-1B-qoI" firstAttribute="top" secondItem="EeF-RR-YsO" secondAttribute="bottom" id="IA2-Y9-BIz"/>
-                                <constraint firstItem="qF2-ho-fmS" firstAttribute="top" secondItem="per-hg-tie" secondAttribute="top" id="IBd-Qi-BOQ"/>
                                 <constraint firstAttribute="bottom" secondItem="k1P-1B-qoI" secondAttribute="bottom" id="M13-o8-QNA"/>
+                                <constraint firstItem="qF2-ho-fmS" firstAttribute="centerY" secondItem="8xO-AM-RlQ" secondAttribute="centerY" id="MAl-2N-My0"/>
                                 <constraint firstItem="EeF-RR-YsO" firstAttribute="top" secondItem="per-hg-tie" secondAttribute="top" id="NhM-ww-Pmb"/>
                                 <constraint firstItem="EeF-RR-YsO" firstAttribute="leading" secondItem="per-hg-tie" secondAttribute="leading" id="P4X-Ke-TKH"/>
                                 <constraint firstItem="k1P-1B-qoI" firstAttribute="trailing" secondItem="X98-3Q-Vbj" secondAttribute="trailing" id="PLx-zU-33L"/>
@@ -132,7 +132,7 @@
         </view>
     </objects>
     <resources>
-        <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

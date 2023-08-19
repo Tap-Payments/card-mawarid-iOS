@@ -56,8 +56,10 @@ import LocalisationManagerKit_iOS
     internal var metadata:TapMetadata? = nil
     /// Should we always ask for 3ds while saving the card. Default is true
     internal var enfroce3DS:Bool = true
-    /// Holding the latest init response model to fetch requierd data when needed like session token or encryption key
-    internal var sdkSettings:SDKSettingsMawarid?
+    /// Holding the latest SDK settings model to fetch requierd data when needed like session token or encryption key
+    internal var sdkSettings:SDKSettings?
+    /// Holding the latest init model response
+    internal var initModel:TapInitResponseModel?
     /// Holding the allowed card brands to process for the logged in merchant
     internal var paymentOptions:[PaymentOption]?
     

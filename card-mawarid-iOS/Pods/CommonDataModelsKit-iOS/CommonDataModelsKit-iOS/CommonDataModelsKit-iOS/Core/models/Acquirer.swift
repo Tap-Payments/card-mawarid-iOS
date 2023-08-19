@@ -6,7 +6,8 @@
 //
 
 /// Acquirer information class.
-@objcMembers public final class Acquirer: NSObject, Decodable {
+@objcMembers
+@objc(CheckoutAcquirer) public final class Acquirer: NSObject, Decodable {
     
     // MARK: - Public -
     // MARK: Properties
@@ -20,4 +21,8 @@
         
         case response = "response"
     }
+}
+
+extension Acquirer: Encodable {
+    
 }

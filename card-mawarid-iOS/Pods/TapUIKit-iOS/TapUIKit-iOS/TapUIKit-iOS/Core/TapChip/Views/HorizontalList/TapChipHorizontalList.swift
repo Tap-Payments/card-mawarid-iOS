@@ -126,8 +126,8 @@ import LocalisationManagerKit_iOS
             self.adjustArabicLayout(delay: delay)
             if #available(iOS 13, *) {
                 if TapLocalisationManager.shared.localisationLocale ?? "en" == "ar" {
-                    self.adjustArabicLayout(delay: 500)
-                    self.adjustArabicLayout(delay: 900)
+                    //self.adjustArabicLayout(delay: 500)
+                    //self.adjustArabicLayout(delay: 900)
                 }
             }
         }
@@ -214,6 +214,14 @@ import LocalisationManagerKit_iOS
 /// Here we map the collection view methods to read from the view model data
 extension TapChipHorizontalList:UICollectionViewDataSource,UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
     
+    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.didEndDisplaying(visibleCells: self.collectionView.indexPathsForVisibleItems)
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.didEndDisplaying(visibleCells: self.collectionView.indexPathsForVisibleItems)
+    }
+    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.numberOfRows()
     }
@@ -260,6 +268,8 @@ extension TapChipHorizontalList:TapChipHorizontalViewModelDelegate {
             headerView.changeEditingState(to: to)
         }
     }
+    
+    
     
     func refreshLayout() {
         assignFlowLaout()

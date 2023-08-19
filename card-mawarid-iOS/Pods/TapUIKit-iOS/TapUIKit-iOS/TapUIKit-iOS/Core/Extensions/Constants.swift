@@ -14,9 +14,12 @@ public class TapConstantManager {
     
     static let TapBottomSheetContainerTag:Int = 100
     static let TapBottomSheetMinimumHeight:CGFloat = 150
-    static let TapBottomSheetMinimumYPoint:CGFloat = 50
+    static let TapBottomSheetMinimumYPoint:CGFloat = 35
     public static let TapActionSheetStatusNotification:String = "ActionButtonStatusChanged"
     public static let TapActionSheetBlockNotification:String = "ActionButtonBlockChanged"
+    public static let TapBackButtonVisibilityNotification:String = "TapBackButtonVisibilityNotification"
+    public static let TapBackButtonBlockNotification:String = "TapBackButtonBlockNotification"
+    
     public static let TapAnimationDuration:Double = 0.75
     
     static var maxAllowedHeight:CGFloat {

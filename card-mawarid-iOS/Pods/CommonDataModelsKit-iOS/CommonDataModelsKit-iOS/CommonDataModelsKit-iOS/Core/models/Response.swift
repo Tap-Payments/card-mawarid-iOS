@@ -6,7 +6,8 @@
 //
 
 /// Response structure.
-@objcMembers public final class Response: NSObject {
+@objcMembers
+@objc(CheckoutResponse) public final class Response: NSObject {
     
     // MARK: - Public -
     // MARK: Properties
@@ -47,5 +48,15 @@ extension Response: Decodable {
         let message = try container.decode(String.self, forKey: .message)
         
         self.init(code: code, message: message)
+    }
+}
+
+// MARK: - Encodable
+
+extension Response: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(code, forKey: .code)
+        try container.encodeIfPresent(message, forKey: .message)
     }
 }

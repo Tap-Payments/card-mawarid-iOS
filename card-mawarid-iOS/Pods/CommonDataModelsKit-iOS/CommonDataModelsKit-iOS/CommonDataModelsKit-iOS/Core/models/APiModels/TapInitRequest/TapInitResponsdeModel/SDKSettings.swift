@@ -35,9 +35,6 @@ public struct SDKSettings {
     /// Session token.
     public private(set) var sessionToken: String?
     
-    /// Determine if the passed data is correct ones by the backend
-    internal let verifiedApplication:Bool?
-    
     // MARK: - Private -
     
     private enum CodingKeys: String, CodingKey {
@@ -46,12 +43,12 @@ public struct SDKSettings {
         case permissions            = "permissions"
         case merchantLogo           = "logo"
         case merchantName           = "name"
+        case merchantCountry        = "country_code"
         case encryptionKey          = "encryption_key"
         case deviceID               = "device_id"
         case merchant               = "merchant"
         case internalSettings       = "sdk_settings"
         case sessionToken           = "session_token"
-        case verifiedApplication    = "verified_application"
     }
 }
 
@@ -66,8 +63,8 @@ extension SDKSettings: Decodable {
         let encryptionKey           = try container.decode(String.self,                 forKey: .encryptionKey)
         let merchantName            = try container.decode(String.self,                 forKey: .merchantName)
         let merchantLogo            = try container.decode(String.self,                 forKey: .merchantLogo)
-        let merchant                = Merchant(logoURL: merchantLogo, name: merchantName)
-        let verifiedApplication     = try container.decode(Bool.self,                   forKey: .verifiedApplication)
+        let merchantCountry         = try container.decode(String.self,                 forKey: .merchantCountry)
+        let merchant                = Merchant(logoURL: merchantLogo, name: merchantName, countryCode: merchantCountry)
         let internalSettings        = try container.decode(InternalSDKSettings.self,    forKey: .internalSettings)
         
         let permissions             = try container.decodeIfPresent(Permissions.self,   forKey: .permissions) ?? .tap_none
@@ -87,8 +84,7 @@ extension SDKSettings: Decodable {
                   deviceID:             deviceID,
                   merchant:             merchant,
                   internalSettings:     internalSettings,
-                  sessionToken:         sessionToken,
-                  verifiedApplication:  verifiedApplication)
+                  sessionToken:         sessionToken)
     }
 }
 
@@ -102,13 +98,85 @@ public struct TapInitResponseModel:Decodable {
     /// Data.
     public var data: SDKSettings
     /// Payment options.
-    public var cardPaymentOptions: TapPaymentOptionsReponseModel
+    public var paymentOptions: TapPaymentOptionsReponseModel
+    /// session token.
+    public var session: String
+    /// The model for fetching the default assets urls for themes and localisations
+    public var assets: TapAssetsModel
     
     // MARK: - Private -
     
     private enum CodingKeys: String, CodingKey {
         
         case data               = "merchant"
-        case cardPaymentOptions = "payment_options"
+        case paymentOptions     = "payment_options"
+        case session            = "session"
+        case assets             = "assests"
     }
+}
+
+/// The model for fetching the default assets urls for themes and localisations
+public struct TapAssetsModel:Codable {
+    
+    /// The theme model
+    public let theme:TapThemeAssetsModel
+    
+    /// The loclisation model
+    public let localisation:TapLocalisationAssetsModel
+    
+}
+
+/// The model for fetching the default assets urls for the light and dark themes
+public struct TapThemeAssetsModel:Codable {
+    
+    /// The light mode theme url
+    public let light:String
+    
+    /// The dark mode theme url
+    public let dark:String
+    
+    /// A path to the mobile only theme, helps in reducing the KB loaded. The default url contents has themes for mobile & web
+    public var lighMobileOnly:String {
+        var mutatingLight = light
+        return mutatingLight.tap_replaceFirstOccurrence(of: "TapThemeMobile", with: "TapThemeMobileOnly")
+    }
+    
+    /// A path to the mobile only theme, helps in reducing the KB loaded. The default url contents has themes for mobile & web
+    public var darkMobileOnly:String {
+        var mutatingDark = dark
+        return mutatingDark.tap_replaceFirstOccurrence(of: "TapThemeMobile", with: "TapThemeMobileOnly")
+    }
+    
+    /// The card theme model
+    public var card:TapCardThemeAssetsModel?
+    
+}
+
+
+/// The model for fetching the default assets urls for the localisations
+public struct TapLocalisationAssetsModel:Codable {
+    /// The localisation url
+    public let url:String
+    /// The card loclisation model
+    public let card:TapCardLocalisationAssetsModel?
+}
+
+
+
+/// The model for fetching the default assets urls for the light and dark themes
+public struct TapCardThemeAssetsModel:Codable {
+    
+    /// The light mode theme url
+    public let light:String
+    
+    /// The dark mode theme url
+    public let dark:String
+    
+}
+
+
+/// The model for fetching the default assets urls for the localisations
+public struct TapCardLocalisationAssetsModel:Codable {
+    /// The localisation url
+    public let url:String
 }

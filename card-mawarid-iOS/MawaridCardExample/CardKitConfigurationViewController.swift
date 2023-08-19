@@ -8,6 +8,8 @@
 import UIKit
 import card_mawarid_iOS
 import BottomSheet
+import CommonDataModelsKit_iOS
+
 class CardKitConfigurationViewController: UIViewController {
 
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
@@ -28,9 +30,9 @@ class CardKitConfigurationViewController: UIViewController {
     private func configureSDK() {
         loadingIndicator.isHidden = false
         // Override point for customization after application launch.
-        let cardDataConfig:TapCardDataConfiguration = .init(sdkMode: .sandbox, localeIdentifier: "en", secretKey: .init(sandbox: "sk_test_yKOxBvwq3oLlcGS6DagZYHM2", production: "sk_live_V4UDhitI0r7sFwHCfNB6xMKp"))
+        let cardDataConfig:TapCardDataConfiguration = .init(sdkMode: .production, localeIdentifier: "en", secretKey: .init(sandbox: "pk_test_iApRSkwIyceDHxCKN6n9OBEv", production: "pk_live_qfbsj29U4xpdwvWOFl7y0NGP"))
         
-        TapCardForumConfiguration.shared.configure(dataConfig: cardDataConfig,customTheme: .init(with: "lightTheme", and: "darkTheme", from: .LocalJsonFile),customLocalisation: .init(with: Bundle.main.url(forResource: "cardlocalisation", withExtension: "json"), from: .LocalJsonFile, shouldFlip: false, localeIdentifier: "en"), transactionCurrency: .SAR) {
+        TapCardForumConfiguration.shared.configure(dataConfig: cardDataConfig,customTheme: .init(with: "lightTheme", and: "darkTheme", from: .LocalJsonFile),customLocalisation: .init(with: Bundle.main.url(forResource: "cardlocalisation", withExtension: "json"), from: .LocalJsonFile, shouldFlip: false, localeIdentifier: "en"), transactionCurrency: .SAR, customer: TapCustomer.defaultCustomer()) {
             DispatchQueue.main.async { [weak self] in
                 self?.loadingIndicator.isHidden = true
                 

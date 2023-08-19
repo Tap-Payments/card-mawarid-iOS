@@ -15,6 +15,12 @@ import class TapApplePayKit_iOS.TapApplePayToken
 /// This is the public protocol for outer components to listen to events and data fired from this view model and its attached view
 @objc public protocol TapChipHorizontalListViewModelDelegate {
     /**
+     The event will be fired when user scroll
+     - Parameter showingDisabledItem: Represent if a disabled cell is showing
+     */
+    @objc func didShowDisabledItems(isShow showingDisabledItem: Bool)
+    
+    /**
      The event will be fired when a cell is selected in the attacjed uicollection voew
      - Parameter viewModel: Represents the attached view model of the selectec cell view
      */
@@ -29,6 +35,11 @@ import class TapApplePayKit_iOS.TapApplePayToken
      - Parameter headerType: Represents which header was clicked
      */
     @objc func headerRightButtonClicked(in headerType:TapHorizontalHeaderType)
+    
+    /**
+     The event will be fired when the list deselected all items
+     */
+    @objc func deselectedAll()
     /**
      The event will be fired when end editing button in the header if any is clicked
      - Parameter headerType: Represents which header was clicked
@@ -143,6 +154,12 @@ internal protocol TapChipHorizontalViewModelDelegate {
         }
     }
     
+    /// Instructs the view model to scroll to index
+    /// - Parameter index: The index to scroll to
+    @objc public func scrollTo(index:Int) {
+        attachedView.collectionView.scrollToItem(at: .init(row: index, section: 0), at: .centeredHorizontally, animated: true)
+    }
+    
     /**
      Deletes a certain cell
      - Parameter viewModel:The view model we want to remove its cell
@@ -195,8 +212,27 @@ internal protocol TapChipHorizontalViewModelDelegate {
     /// Call this method when you want to deselct all selected items inside the horizontal list
     @objc public func deselectAll() {
         cellDelegate?.deselectAll()
+        self.selectedChip = nil
     }
     
+    /// Call this method to select a certain cell
+    /// - Parameter with paymentOptionIdentifier: The id of the payment option you want to select
+    /// - Parameter shouldAnimate: If set to true, the list will  scroll to the selected option. Default is false
+    @objc public func selectCell(with paymentOptionIdentifier:String, shouldAnimate:Bool = false) {
+        // let us get the index of the cell and make sure the provided view model exists in the data source
+        guard let cellIndex:Int = dataSource.firstIndex(where: { $0.paymentOptionIdentifier == paymentOptionIdentifier }) else { return }
+        // let us create the indexpath and then select then scroll to it if needed
+        let indexPath = IndexPath(item: cellIndex, section: 0)
+        DispatchQueue.main.async {
+            // Let us propagate the selection events
+            //self.didSelectItem(at: cellIndex)
+            self.listView?.viewModel.selectedChip = nil
+            self.listView?.viewModel.didSelectItem(at: cellIndex)
+            // let us select it UI wise
+            self.listView?.collectionView.selectItem(at: indexPath, animated: shouldAnimate, scrollPosition: UICollectionView.ScrollPosition.centeredHorizontally)
+            
+        }
+    }
     
     /**
      Will be fired you want to hide or show the right button accessory
@@ -213,6 +249,11 @@ internal protocol TapChipHorizontalViewModelDelegate {
     @objc public func editMode(changed to:Bool) {
         dataSource.forEach{ $0.editMode = to }
         cellDelegate?.changeHeaderEditingStatus(to: to)
+    }
+    
+    /// call this method to tell the view model, that the enable/disable status changed and he needs to instruct the view to rerender the chips
+    @objc public func updateEnabledStatusUI() {
+        
     }
     
     /// Creates empty view model, added for convience
@@ -286,8 +327,21 @@ internal protocol TapChipHorizontalViewModelDelegate {
      - Parameter index: The position of the cell you want the view model of it
      - Returns: The view model that is associated to the given cell index
      */
-    internal func viewModel(at index:Int) -> GenericTapChipViewModel {
+    public func viewModel(at index:Int) -> GenericTapChipViewModel {
         return dataSource[index]
+    }
+    
+    /**
+     Fire the event and handle the logic of displaying cells
+     - Parameter visibleCells: The positions of visible cells
+     */
+    @objc public func didEndDisplaying(visibleCells indices: [IndexPath]) {
+        
+        let isShowingDisabledCells = indices
+            .map{viewModel(at: $0.row)}
+            .contains { $0.isDisabled }
+        
+        delegate?.didShowDisabledItems(isShow: isShowingDisabledCells)
     }
     
     /**
@@ -298,6 +352,13 @@ internal protocol TapChipHorizontalViewModelDelegate {
         let selectedViewModel = viewModel(at: index)
         // Make sure we are not in editing mode
         guard !selectedViewModel.editMode else{
+            return
+        }
+        // Check if it is not already selected, as if it is, we will deselct on this click
+        guard selectedChip != selectedViewModel else {
+            // Inform the view model of the deselected cell that he is selected, hence, he will pass this value to his attached UIView
+            selectedChip = nil
+            delegate?.deselectedAll()
             return
         }
         // Inform the view model of the selected cell that he is selected, hence, he will pass this value to his attached UIView

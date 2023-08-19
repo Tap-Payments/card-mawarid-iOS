@@ -33,6 +33,8 @@ import TapThemeManager2020
     @IBOutlet weak var phoneCountryCodeLabel: UILabel!
     /// Holds all the textfields we will collect data with
     @IBOutlet var textFields: [UITextField]!
+    /// Holds reference to the arrow dropdown image view
+    @IBOutlet weak var arrowDownImageView: UIImageView!
     /// Popup dialog to select the country code picker
     
     /// Holds the UIViews that needed to be RTL supported based on the selected locale
@@ -100,10 +102,10 @@ import TapThemeManager2020
     /// Used to reload the phone field data from the view model
     internal func reloadPhone() {
         guard let viewModel = viewModel,
-        let countryCode = viewModel.selectedCountry.code else {
+              let countryCode = viewModel.selectedCountry?.code else {
             return
         }
-
+        
         phoneCountryCodeLabel.text = "+\(countryCode)"
         phoneNumberTextField.text = ""
     }
@@ -137,12 +139,18 @@ import TapThemeManager2020
         
         phoneNumberTextField.textAlignment = (TapLocalisationManager.shared.localisationLocale == "ar") ? .right : .left
         emailTextField.textAlignment = (TapLocalisationManager.shared.localisationLocale == "ar") ? .right : .left
+        emailTextField.autocorrectionType = .no
+        emailTextField.delegate = self
     }
     
     /// Now time to set localized string representations for the corresponding views
     private func localizeTextualContent() {
-        emailTextField.placeholder = TapLocalisationManager.shared.localisedValue(for: "Common.email", with: TapCommonConstants.pathForDefaultLocalisation()).capitalized
-        phoneNumberTextField.placeholder = "50 000 000"
+        
+        let placeHolderColor:UIColor = TapThemeManager.colorValue(for: "\(themePath).textfields.placeHolderColor") ?? .black
+        
+        emailTextField.attributedPlaceholder = .init(string: TapLocalisationManager.shared.localisedValue(for: "Common.email", with: TapCommonConstants.pathForDefaultLocalisation()).capitalized, attributes: [.foregroundColor:placeHolderColor, .font : TapThemeManager.fontValue(for: "\(themePath).textfields.font", shouldLocalise: true)!])
+        
+        phoneNumberTextField.attributedPlaceholder = .init(string: "50 000 000", attributes: [.foregroundColor : placeHolderColor, .font : TapThemeManager.fontValue(for: "\(themePath).textfields.font", shouldLocalise: false)!])
     }
     
     /// Adjusts the height for the text fields based on the data from the view model
@@ -164,7 +172,7 @@ import TapThemeManager2020
     /// Adjust the visbility of the fields to be collected
     fileprivate func UpdateViewsVisibility(_ viewModel: CustomerContactDataCollectionViewModel) {
         /*emailTextField.isHidden = !viewModel.toBeCollectedData.contains(.email)
-        phoneEntryContainerView.isHidden = !viewModel.toBeCollectedData.contains(.phone)*/
+         phoneEntryContainerView.isHidden = !viewModel.toBeCollectedData.contains(.phone)*/
         
         
         if !viewModel.toBeCollectedData.contains(.email) {
@@ -220,7 +228,7 @@ extension CustomerContactDataCollectionView {
         
         // The textfields
         textFields.forEach { textField in
-            textField.tap_theme_font = .init(stringLiteral: "\(themePath).textfields.font")
+            textField.tap_theme_font = .init(stringLiteral: "\(themePath).textfields.font", shouldLocalise: textField == phoneNumberTextField)
             textField.tap_theme_textColor = .init(keyPath: "\(themePath).textfields.color")
         }
         
@@ -232,8 +240,11 @@ extension CustomerContactDataCollectionView {
         phoneNumberTextField.setRightPaddingPoints(12)
         
         // The phone country label
-        phoneCountryCodeLabel.tap_theme_font = .init(stringLiteral: "\(themePath).textfields.countryCodeLabelFont")
+        phoneCountryCodeLabel.tap_theme_font = .init(stringLiteral: "\(themePath).textfields.countryCodeLabelFont", shouldLocalise: false)
         phoneCountryCodeLabel.tap_theme_textColor = .init(keyPath: "\(themePath).textfields.color")
+        
+        // country drop down arrow icon
+        arrowDownImageView.tap_theme_tintColor = .init(keyPath: "\(themePath).textfields.color")
         
         layoutIfNeeded()
     }
@@ -243,5 +254,17 @@ extension CustomerContactDataCollectionView {
         super.traitCollectionDidChange(previousTraitCollection)
         TapThemeManager.changeThemeDisplay(for: self.traitCollection.userInterfaceStyle)
         applyTheme()
+    }
+}
+
+
+extension CustomerContactDataCollectionView:UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            phoneNumberTextField.becomeFirstResponder()
+        }else if textField == phoneNumberTextField {
+            phoneNumberTextField.resignFirstResponder()
+        }
+        return true
     }
 }

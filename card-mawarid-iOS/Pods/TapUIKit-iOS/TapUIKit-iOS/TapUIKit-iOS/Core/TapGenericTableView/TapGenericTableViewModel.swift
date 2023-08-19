@@ -23,7 +23,7 @@ import class UIKit.NSLayoutConstraint
      The event will be fired when the user cliks on an Item cell
      - Parameter viewModel: Represents The attached view model
      */
-    @objc func itemClicked(for viewModel:ItemCellViewModel)
+    @objc func itemClicked(for viewModel:TapGenericTableCellViewModel)
     
     //func contentSizeChanged(to newSize:CGSize)
 }
@@ -81,6 +81,7 @@ internal protocol TapCellGenericTableViewModelDelegate {
         // Create the attached table view instance
         tableView = .init()
         tableView?.translatesAutoresizingMaskIntoConstraints = false
+        tableView?.backgroundColor = .clear
         // Assign self to be the delegate of the table created
         tableView?.changeViewMode(with: self)
         defer {
@@ -188,11 +189,15 @@ internal protocol TapCellGenericTableViewModelDelegate {
 
 
 extension TapGenericTableViewModel:TapGenericCellViewModelDelegate {
+    func isLastRow(for viewModel: TapGenericTableCellViewModel) -> Bool {
+        return dataSource.last == viewModel
+    }
+    
     func reloadRows(at indexPaths: [IndexPath]) {
         cellDelegate?.reloadRows(at: indexPaths)
     }
     
-    func itemClicked(for viewModel: ItemCellViewModel) {
+    func itemClicked(for viewModel: TapGenericTableCellViewModel) {
         delegate?.itemClicked(for: viewModel)
     }
 }

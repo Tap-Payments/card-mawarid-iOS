@@ -7,7 +7,8 @@
 //
 
 /// Authorize object.
-@objcMembers public final class Authorize: NSObject, AuthorizeProtocol, IdentifiableWithString {
+@objcMembers
+@objc(CheckoutAuthorize) public final class Authorize: NSObject, AuthorizeProtocol, IdentifiableWithString {
     
     // MARK: - Public -
     // MARK: Properties
@@ -153,6 +154,39 @@
         self.authorizeAction        = authorizeAction
         
         super.init()
+    }
+}
+
+
+// MARK: - Decodable
+extension Authorize: Encodable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(identifier, forKey: .identifier)
+        try container.encodeIfPresent(apiVersion, forKey: .apiVersion)
+        try container.encodeIfPresent(amount, forKey: .amount)
+        try container.encodeIfPresent(currency, forKey: .currency)
+        try container.encodeIfPresent(customer, forKey: .customer)
+        try container.encodeIfPresent(isLiveMode, forKey: .isLiveMode)
+        try container.encodeIfPresent(cardSaved, forKey: .cardSaved)
+        try container.encodeIfPresent(object, forKey: .object)
+        try container.encodeIfPresent(authentication, forKey: .authentication)
+        try container.encodeIfPresent(redirect, forKey: .redirect)
+        try container.encodeIfPresent(post, forKey: .post)
+        try container.encodeIfPresent(card, forKey: .card)
+        try container.encodeIfPresent(source, forKey: .source)
+        try container.encodeIfPresent(destinations, forKey: .destinations)
+        try container.encodeIfPresent(status, forKey: .status)
+        try container.encodeIfPresent(requires3DSecure, forKey: .requires3DSecure)
+        try container.encodeIfPresent(transactionDetails, forKey: .transactionDetails)
+        try container.encodeIfPresent(descriptionText, forKey: .descriptionText)
+        try container.encodeIfPresent(metadata, forKey: .metadata)
+        try container.encodeIfPresent(reference, forKey: .reference)
+        try container.encodeIfPresent(receiptSettings, forKey: .receiptSettings)
+        try container.encodeIfPresent(acquirer, forKey: .acquirer)
+        try container.encodeIfPresent(response, forKey: .response)
+        try container.encodeIfPresent(statementDescriptor, forKey: .statementDescriptor)
+        try container.encodeIfPresent(authorizeAction, forKey: .authorizeAction)
     }
 }
 

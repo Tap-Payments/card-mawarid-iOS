@@ -52,14 +52,18 @@ import Nuke
     /// Holds the logic needed to display and fetch all the requied data and displays it inside the cell view
     func reload() {
         // Check if the view model has a valid icon URL
-        guard let iconURLString:String = viewModel.icon, iconURLString.isValidURL(), let iconURL:URL = URL(string: iconURLString) else { gatewayIconImageView.image = nil
+        guard let iconURLString:String = viewModel.displayIcon, iconURLString.isValidURL(), let iconURL:URL = URL(string: iconURLString) else { gatewayIconImageView.image = nil
             return
         }
-        
+        //Nuke.DataLoader.sharedUrlCache.removeAllCachedResponses()
         gatewayIconImageView.downloadImage(with: iconURL, nukeOptions: nil)
+        gatewayIconImageView.contentMode = .scaleAspectFill
         
         // Apply the editing ui if needed
         changedEditMode(to: viewModel.editMode)
+        
+        // Change the bg color based on the status
+        tap_theme_backgroundColor = viewModel.isDisabled ? .init(keyPath: "\(themePath).disabledBackgroundColor") : .init(keyPath: "\(themePath).backgroundColor")
     }
     
     override func tapChipType() -> TapChipType {
@@ -100,11 +104,12 @@ extension GatewayImageCollectionViewCell {
     
     /// Match the UI attributes with the correct theming entries
     private func matchThemeAttributes() {
-
+        
         let shadowPath:String = isSelected ? "selected" : "unSelected"
         
-        tap_theme_backgroundColor = .init(keyPath: "\(themePath).backgroundColor")
+        tap_theme_backgroundColor = viewModel.isDisabled ? .init(keyPath: "\(themePath).disabledBackgroundColor") : .init(keyPath: "\(themePath).backgroundColor")
         layer.tap_theme_cornerRadious = .init(keyPath: "horizontalList.chips.radius")
+        gatewayIconImageView.layer.tap_theme_cornerRadious = .init(keyPath: "horizontalList.chips.radius")
         
         layer.tap_theme_shadowColor = ThemeCgColorSelector.init(keyPath: "\(themePath).\(shadowPath).shadow.color")
         layer.shadowOffset = CGSize(width: CGFloat(TapThemeManager.numberValue(for: "\(themePath).\(shadowPath).shadow.offsetWidth")?.floatValue ?? 0), height: CGFloat(TapThemeManager.numberValue(for: "\(themePath).\(shadowPath).shadow.offsetHeight")?.floatValue ?? 0))
@@ -115,6 +120,10 @@ extension GatewayImageCollectionViewCell {
         
         self.clipsToBounds = false
         self.layer.masksToBounds = false
+        
+        gatewayIconImageView.clipsToBounds = true
+        gatewayIconImageView.layer.masksToBounds = true
+        
         
     }
     
@@ -134,6 +143,10 @@ extension GatewayImageCollectionViewCell {
 
 
 extension GatewayImageCollectionViewCell:GenericCellChipViewModelDelegate{
+    func changedDisabledMode(to: Bool) {
+        reload()
+    }
+    
     
     func changedEditMode(to: Bool) {
         self.contentView.alpha = to ? 0.5 : 1

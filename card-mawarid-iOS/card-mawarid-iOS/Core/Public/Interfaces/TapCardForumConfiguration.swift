@@ -72,7 +72,7 @@ import CommonDataModelsKit_iOS
         // Store the configueation data for further access
         sharedNetworkManager.dataConfig = nonNullDataConfig
         // Infotm the network manager to init itself from the init api
-        sharedNetworkManager.initialiseSDKFromAPI(onCheckOutReady: onCheckOutReady, onErrorOccured: onErrorOccured)
+        sharedNetworkManager.configSDK(onCheckOutReady: onCheckOutReady, onErrorOccured: onErrorOccured)
     }
     
     

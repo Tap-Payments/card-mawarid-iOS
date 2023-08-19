@@ -5,13 +5,9 @@
 //  Created by Osama Rabie on 6/11/20.
 //  Copyright © 2020 Tap Payments. All rights reserved.
 //
-import class LocalisationManagerKit_iOS.TapLocalisationManager
-import class CommonDataModelsKit_iOS.TapCommonConstants
-import class CommonDataModelsKit_iOS.TapAmountedCurrencyFormatter
-import class CommonDataModelsKit_iOS.AmountedCurrency
-import enum CommonDataModelsKit_iOS.CurrencyLocale
-import enum CommonDataModelsKit_iOS.TapCurrencyCode
-
+import LocalisationManagerKit_iOS
+import CommonDataModelsKit_iOS
+import Nuke
 /// The protocl that informs the subscriber of any events happened/fired from the Amount Section View
 @objc public protocol TapAmountSectionViewModelDelegate {
     /// A block to execute logic in view model when the items in the view is clicked by the user
@@ -24,6 +20,8 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     @objc optional func closeGoPayClicked()
     /// A block to execute logic in view model when the amount section view in the view is clixked by the user
     @objc optional func amountSectionClicked()
+    /// A block to execute logic in view model when the local currency prompt is clicked
+    @objc optional func localCurrencyPromptClicked(currencyCode:String)
 }
 
 /// The view model that controlls the data shown inside a TapAmountSectionView
@@ -33,13 +31,13 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     /// Represent the original transaction total amount
     internal var originalAmountLabelObserver:((String?)->()) = { _ in } {
         didSet {
-            originalAmountLabelObserver(currencyFormatted(amount: originalTransactionAmount, currencyCode: originalTransactionCurrency.currency))
+            originalAmountLabelObserver(currencyFormatted(amount: originalTransactionAmount, currencyCode: originalTransactionCurrency.currency, decimalDigits: originalTransactionCurrency.decimalDigits))
         }
     }
     /// Represent the converted transaction total amount if any
     internal var convertedAmountLabelObserver:((String?)->()) = { _ in } {
         didSet {
-            convertedAmountLabelObserver(currencyFormatted(amount: convertedTransactionAmount, currencyCode: convertedTransactionCurrency.currency))
+            convertedAmountLabelObserver(currencyFormatted(amount: convertedTransactionAmount, currencyCode: convertedTransactionCurrency.currency, decimalDigits: convertedTransactionCurrency.decimalDigits))
         }
     }
     /// Represent the number of items in the current transaction
@@ -48,6 +46,23 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
             itemsLabelObserver(itemsLabel)
         }
     }
+    
+    /// Represent the customer's local currency based on his location, providing back his currency code & logo url
+    internal var localCurrencyNameObserver:((String)->()) = { _ in } {
+        didSet {
+            localCurrencyNameObserver(localCurrencyName)
+        }
+    }
+    
+    
+    /// Represent the customer's local currency based on his location, providing back his currency code & logo url
+    internal var localCurrencyFlagObserver:((URL)->()) = { _ in } {
+        didSet {
+            guard let nonNullUrl:URL = URL(string: localCurrencyFlag) else { return }
+            localCurrencyFlagObserver(nonNullUrl)
+        }
+    }
+    
     /// Indicates if the number of items should be shown
     internal var showItemsObserver:((Bool)->()) = { _ in } {
         didSet {
@@ -61,13 +76,28 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
         }
     }
     
+    /// Indicates the local customer's currency name
+    internal var localCurrencyName:String = "" {
+        didSet{
+            localCurrencyNameObserver(localCurrencyName)
+        }
+    }
+    
+    
+    /// Indicates the local customer's currency flag
+    internal var localCurrencyFlag:String = "" {
+        didSet{
+            localCurrencyFlagObserver(URL(string: localCurrencyFlag)!)
+        }
+    }
+    
     /// Computes the symbol of the currently used currency
     internal var usedCurrencyCode:String  {
         // We need to now if there is a conversion currency or we shall return the original currency code
         if self.convertedTransactionCurrency.currency != .undefined {
-            return " | \(self.convertedTransactionCurrency.currency.appleRawValue)"
+            return " | \(self.convertedTransactionCurrency.displaybaleSymbol)"
         }else if self.originalTransactionCurrency.currency != .undefined {
-            return " | \(self.originalTransactionCurrency.currency.appleRawValue)"
+            return " | \(self.originalTransactionCurrency.displaybaleSymbol)"
         }
         return ""
     }
@@ -103,7 +133,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     
     /// Represent the original transaction total amount
     @objc public var originalTransactionAmountFormated:String  {
-        return currencyFormatted(amount: originalTransactionAmount,currencyCode: originalTransactionCurrency.currency)
+        return currencyFormatted(amount: originalTransactionAmount,currencyCode: originalTransactionCurrency.currency, decimalDigits: originalTransactionCurrency.decimalDigits)
     }
     
     /// Represent the title that should be displayed inside the SHOW ITEMS/CLOSE button
@@ -126,7 +156,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     
     // Represent the original transaction total amount
     @objc public var convertedTransactionAmountFormated:String  {
-        return currencyFormatted(amount: convertedTransactionAmount,currencyCode: convertedTransactionCurrency.currency)
+        return currencyFormatted(amount: convertedTransactionAmount,currencyCode: convertedTransactionCurrency.currency, decimalDigits: convertedTransactionCurrency.decimalDigits)
     }
     
     /// Represent the converted transaction currenc code if any
@@ -200,7 +230,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     }
     
     private func updateAmountObserver(for amount:Double, with currencyCode:AmountedCurrency?, on observer:((String)->())) {
-        observer(currencyFormatted(amount: amount, currencyCode: currencyCode?.currency))
+        observer(currencyFormatted(amount: amount, currencyCode: currencyCode?.currency, decimalDigits: currencyCode?.decimalDigits))
     }
     
     /**
@@ -209,7 +239,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
      - Parameter currencyCode: The currency code we want to format with
      - Returns: A formatted localized currency paired string
      */
-    private func currencyFormatted(amount:Double,currencyCode:TapCurrencyCode?) -> String {
+    private func currencyFormatted(amount:Double, currencyCode:TapCurrencyCode?, decimalDigits:Int?) -> String {
         guard let currencyCode = currencyCode, currencyCode != .undefined  else {
             return ""
         }
@@ -217,6 +247,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
         
         let formatter = TapAmountedCurrencyFormatter {
             $0.currency = currencyCode
+            $0.decimalDigits = decimalDigits ?? 2
             $0.locale = CurrencyLocale.englishUnitedStates
             // Check if the caller wants to show the currency symbol instead of the code
             if weakTapCurrencyFormatterSymbol == .LocalSymbol {
@@ -230,8 +261,16 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     }
     
     // MARK:- Internal methods to let the view talks with the delegate
+    
+    /// Inform the view model that the local currency prompt had been clicked by the user
+    internal func localCurrencyPromptClicked() {
+        delegate?.localCurrencyPromptClicked?(currencyCode: localCurrencyName)
+    }
+    
     /// A block to execute logic in view model when the items in the view is clicked by the user
     internal func itemsClicked() {
+        // First of all, we need to hide the currency prompt if any
+        attachedView.animateCurrencyPrompt(show: false, shouldSlideOut: false)
         // Determine which method should we execute
         switch currentStateView {
             // Meaning, currently we are showing the normal view and we need to show the items list
@@ -247,19 +286,41 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
             closeScanner()
             break
             // Meaning currently we are showing the GoPay Login and we need to go back to the normal view
-        case .GoPayView:
+        case .GoPayView, .SavedCardView:
             closeGoPay()
             break
         }
     }
-    
-    internal func configureItemsLabel() {
+    /// Call thi smethod to adjust the display and the ui of the items button whether to show the items count ro CONFIRM in case of selecting a currency
+    public func configureItemsLabel() {
         switch currentStateView{
         case .DefaultView:
             itemsLabel = "\(numberOfItems) \(sharedLocalisationManager.localisedValue(for: (numberOfItems < 2) ? "Common.item" : "Common.items", with: TapCommonConstants.pathForDefaultLocalisation()))\(self.usedCurrencyCode)"
-        case .ItemsView,.ScannerView,.GoPayView:
+        case .ItemsView:
+            itemsLabel = sharedLocalisationManager.localisedValue(for: "Common.confirm", with: TapCommonConstants.pathForDefaultLocalisation()).uppercased()
+        case .ScannerView,.GoPayView, .SavedCardView:
             itemsLabel = sharedLocalisationManager.localisedValue(for: "Common.close", with: TapCommonConstants.pathForDefaultLocalisation())
         }
+        
+        attachedView.itemsHolderView.isHidden = (currentStateView == .SavedCardView)
+    }
+    
+    /// Call this method if you want to show the currency prompt
+    /// - Parameter with currencyName: the detected customer's currency name
+    /// - Parameter and currencyFlag: The detected customer's currency flag to show
+    public func configureCurrencyPrompt(with currencyName:String, and currencyFlag:URL) {
+        localCurrencyName = currencyName
+        localCurrencyFlag = currencyFlag.absoluteString
+    }
+    
+    /// Call it to fade in the local currency prompt
+    public func showLocalCurrencyPromptBack() {
+        attachedView.animateCurrencyPrompt(show: true,shouldSlideIn: false)
+    }
+    
+    /// Call it when you need to remove the currency prompt for good
+    public func removeCurrencyPrompt() {
+        attachedView.animateCurrencyPrompt(show: false)
     }
     
     /// Handles the logic for transitioning between the normal view and show the items view
@@ -320,4 +381,6 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     case ScannerView
     /// Means, the current screen displays the GoPay
     case GoPayView
+    /// Means, the current screen displays the inline 3ds screen for saved card
+    case SavedCardView
 }

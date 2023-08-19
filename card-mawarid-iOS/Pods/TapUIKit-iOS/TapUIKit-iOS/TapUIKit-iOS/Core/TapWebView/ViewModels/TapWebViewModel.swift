@@ -22,6 +22,8 @@ internal protocol TapWebViewDelegate {
     func stopLoading()
     /// Will be fired when the view model wants to hide/show the header view
     func updateHeaderView(with visibility:Bool)
+    /// Will be fires when the viewmode wants to change the size of the webview with respect to the superview
+    func updateSize(with shouldBeFullScreen: Bool)
 }
 
 /// Protocol to communicate between the view model and the parent view
@@ -46,8 +48,8 @@ internal protocol TapWebViewDelegate {
     @objc func didFail(with error:Error,for url:URL?)
     
     /// Will be fired when the user cancels the authentication web view
-    @objc func webViewCanceled()
-
+    @objc func webViewCanceled(showingFullScreen:Bool)
+    
 }
 
 
@@ -55,12 +57,19 @@ internal protocol TapWebViewDelegate {
 @objc public class TapWebViewModel:NSObject {
     
     /// Reference to the web view itself as UI that will be rendered
-    internal var webView:TapWebView = .init()
+    public var webView:TapWebView = .init()
+    /// The timer used to check if no redirection is being called for the last 3 seconds
+    internal var timer: Timer?
+    /// The delay that we should wait for to decide if it is idle in  seonds
+    internal var delayTime:CGFloat = 0.500
     
     /// Public Reference to the table view itself as UI that will be rendered
     @objc public var attachedView:TapWebView {
         return webView
     }
+    
+    /// A custom action block to execute when nothing else being loaded for a while
+    @objc public var idleForWhile:()->() = {}
     
     /// Protocol to communicate between the view model and the parent view
     @objc public var delegate:TapWebViewModelDelegate?
@@ -70,6 +79,13 @@ internal protocol TapWebViewDelegate {
     @objc public var shouldShowHeaderView:Bool = true {
         didSet{
             viewDelegate?.updateHeaderView(with: shouldShowHeaderView)
+        }
+    }
+    
+    /// Indicates whetehr or not the web view should take the whole screen
+    @objc public var shouldBeFullScreen:Bool = false {
+        didSet{
+            viewDelegate?.updateSize(with: shouldBeFullScreen)
         }
     }
     /**
@@ -85,11 +101,10 @@ internal protocol TapWebViewDelegate {
         viewDelegate?.reloadWebView()
     }
     
-     /// Will be fired when the view model wants to tell the webview to stop loading
+    /// Will be fired when the view model wants to tell the webview to stop loading
     @objc public func stopLoading() {
         viewDelegate?.stopLoading()
     }
-    
     
     @objc override public init() {
         super.init()
@@ -110,6 +125,15 @@ extension TapWebViewModel:WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         // Inform teh delegate about this url we finished loading
         delegate?.didLoad(url: webView.url)
+        
+        if let timer = timer {
+            timer.invalidate()
+        }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: delayTime, repeats: false, block: { (timer) in
+            timer.invalidate()
+            self.idleForWhile()
+        })
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

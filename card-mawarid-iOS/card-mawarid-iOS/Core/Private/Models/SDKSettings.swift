@@ -7,7 +7,7 @@
 import CommonDataModelsKit_iOS
 
 import Foundation
-/// goSell SDK Settings model.
+/*/// goSell SDK Settings model.
 internal class SDKSettingsMawarid: Decodable {
     
     // MARK: - Internal -
@@ -105,3 +105,4 @@ extension SDKSettingsDataMawarid: Decodable {
                   verifiedApplication:  verifiedApplication)
     }
 }
+*/

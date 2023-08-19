@@ -29,7 +29,7 @@ internal class NetworkManager: NSObject {
     }
     private var networkManager: TapNetworkManager
     /// The server base url
-    private let baseURL = "https://api.tap.company/v2/"
+    private let baseURL = (TapCardForumConfiguration.shared.dataConfig?.sdkMode == .sandbox) ? "https://mw-sdk.dev.tap.company/v2/checkout/" : "https://mw-sdk.beta.tap.company/v2/checkout/"
     /// Defines if loging api calls to server
     internal var enableLogging = false
     /// Defines if logging apu calls to console

@@ -41,7 +41,7 @@ install_framework()
 
   if [ -L "${source}" ]; then
     echo "Symlinked..."
-    source="$(readlink "${source}")"
+    source="$(readlink -f "${source}")"
   fi
 
   if [ -d "${source}/${BCSYMBOLMAP_DIR}" ]; then
@@ -180,7 +180,6 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/LocalisationManagerKit-iOS/LocalisationManagerKit_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/McPicker/McPicker.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/NBBottomSheet/NBBottomSheet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PullUpController/PullUpController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
@@ -204,7 +203,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/LocalisationManagerKit-iOS/LocalisationManagerKit_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/McPicker/McPicker.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/NBBottomSheet/NBBottomSheet.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nuke/Nuke.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PullUpController/PullUpController.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"

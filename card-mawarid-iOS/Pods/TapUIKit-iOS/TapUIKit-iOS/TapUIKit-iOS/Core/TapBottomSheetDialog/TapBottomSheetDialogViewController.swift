@@ -95,7 +95,7 @@ import TapThemeManager2020
     /**
      Will be fired once the controller is presented
      */
-    @objc optional func tapBottomSheetPresented()
+    @objc optional func tapBottomSheetPresented(viewController:UIViewController?)
     
     /**
      Fetches if the swipe to dismiss enabled or disabled
@@ -189,9 +189,8 @@ import TapThemeManager2020
     public final override func viewDidLoad() {
         super.viewDidLoad()
         // Fade out the dimming background to show it as fade in fade out as requested
-        view.backgroundColor = .clear
+        view.backgroundColor = TapThemeManager.colorValue(for: "TapVerticalView.backgroundOverlayColor")
         backgroundView = .init(frame: self.view.frame)
-        backgroundView?.backgroundColor = .clear
         backgroundView?.alpha = 0
         view.addSubview(backgroundView!)
         view.sendSubviewToBack(backgroundView!)
@@ -206,6 +205,11 @@ import TapThemeManager2020
         }
         //guard let nonNullPullUpController = addedPullUpController else { return }
         //self.removePullUpController(nonNullPullUpController, animated: false)
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        backgroundView?.fadeIn(duration: 0.75, delay: 0.5, completion: { _ in })
     }
     
     /// Call this method when you need the bottom controller to update its look based in reloading th configurations from the data source again
@@ -229,7 +233,7 @@ import TapThemeManager2020
     override public func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         TapThemeManager.changeThemeDisplay(for: self.traitCollection.userInterfaceStyle)
-        //applyTheme()
+        applyTheme()
     }
     
     /**
@@ -241,7 +245,11 @@ import TapThemeManager2020
         
         // Set the background color o use the theme manager one
         if let backgroundColor = backgroundColor {
+            backgroundView?.alpha = 0
             backgroundView?.backgroundColor = backgroundColor
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)){
+                //self.backgroundView?.fadeIn(duration: 0.25)
+            }
         }else {
             applyTheme()
         }
@@ -257,7 +265,8 @@ import TapThemeManager2020
     
     
     internal func applyTheme() {
-        backgroundView?.tap_theme_backgroundColor = .init(keyPath: "\(themePath).dimmedColor")
+        backgroundView?.backgroundColor = TapThemeManager.colorValue(for: "TapVerticalView.backgroundOverlayColor")
+        self.view.backgroundColor = .clear//TapThemeManager.colorValue(for: "TapVerticalView.backgroundOverlayColor")
     }
     
     /**
@@ -272,11 +281,11 @@ import TapThemeManager2020
         let blurredEffectView = UIVisualEffectView(effect: blurEffect)
         blurredEffectView.tag = TapConstantManager.TapBottomSheetContainerTag
         blurredEffectView.frame = view.bounds
-        
-        //let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        //let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        //vibrancyEffectView.frame = view.bounds
-        //blurredEffectView.contentView.addSubview(vibrancyEffectView)
+        //blurredEffectView.alpha = 0.95
+        /*let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
+         let vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
+         vibrancyEffectView.frame = view.bounds
+         blurredEffectView.contentView.addSubview(vibrancyEffectView)*/
         view.addSubview(blurredEffectView)
     }
     
@@ -307,14 +316,15 @@ import TapThemeManager2020
         addPullUpController(nonNullPresentController, initialStickyPointOffset: tapBottomSheetInitialHeight, animated: false, completion: { [weak self] (_) in
             DispatchQueue.main.async {
                 guard let nonNullPullUpController = self?.addedPullUpController else { return }
-                nonNullPullUpController.pullUpControllerMoveToVisiblePoint(self?.tapBottomSheetInitialHeight ?? 100, animated: true,completion: {
+                nonNullPullUpController.pullUpControllerMoveToVisiblePoint(self?.tapBottomSheetInitialHeight ?? 100, animated: false,completion: {
                     guard let delegate = self?.delegate else { return }
-                    delegate.tapBottomSheetPresented?()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
-                        UIView.animate(withDuration: 0.25,animations: { [weak self] in
-                            self?.backgroundView?.alpha = 1
-                        })
-                    }
+                    delegate.tapBottomSheetPresented?(viewController: self?.tapBottomSheetViewControllerToPresent)
+                    //self?.backgroundView?.alpha = 1
+                    /*DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                     UIView.animate(withDuration: 0.0,animations: { [weak self] in
+                     self?.backgroundView?.alpha = 1
+                     })
+                     }*/
                 })
             }
         })
@@ -372,10 +382,10 @@ import TapThemeManager2020
                 UIView.animate(withDuration: animationDuration,animations: { [weak self] in
                     self?.backgroundView?.alpha = 0
                     //modalController.view.alpha = 0
-                    },completion: { _ in
-                        self?.dismiss(animated: true, completion: {
-                            self?.delegate?.tapBottomSheetDismissed?()
-                        })
+                },completion: { _ in
+                    self?.dismiss(animated: true, completion: {
+                        self?.delegate?.tapBottomSheetDismissed?()
+                    })
                 })
             }
             //self?.dismiss(animated: true, completion: nil)
@@ -386,6 +396,16 @@ import TapThemeManager2020
     /// Will disimiss the whole controller and the presented controller in the bottom sheet
     @objc public func dismissTheController() {
         dismissBottomSheet()
+    }
+    
+    
+    /**
+     Will be fired once the tap sheet content needs to reduce its height in preparing to removing a view
+     - Parameter newHeight: The height to be reduced
+     */
+    @objc public func reduceHeight(by newHeight:CGFloat) {
+        lastRequestedHeight = lastRequestedHeight - newHeight
+        timerAction()
     }
     
     /**

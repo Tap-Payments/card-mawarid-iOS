@@ -23,7 +23,7 @@ import TapCardScanner_iOS
 @objc public class TapVerticalView: UIView {
     
     /// The stackview which is used as the backbone for laying out the views in a vertical fashion
-    @IBOutlet internal var stackView: UIStackView!
+    @IBOutlet public var stackView: UIStackView!
     /// The scroll view which wraps the stackview to provide the scrollability whenever needed
     @IBOutlet internal weak var scrollView: UIScrollView!
     /// The main view loaded from the Xib
@@ -34,7 +34,7 @@ import TapCardScanner_iOS
     /// This is the delegate variable you need to subscripe to whenver you want to listen to updates from this view
     @objc public var delegate:TapVerticalViewDelegate?
     /// Displays the powered by tap footer
-    @IBOutlet weak var powereByTapView: PoweredByTapView!
+    //@IBOutlet weak var powereByTapView: PoweredByTapView!
     /// Holds the last style theme applied
     private var lastUserInterfaceStyle:UIUserInterfaceStyle = .light
     /// This informs the sheet that we need to show bg as a blurring view
@@ -50,6 +50,8 @@ import TapCardScanner_iOS
     @IBOutlet weak var tapActionButtonHeightConstraint: NSLayoutConstraint!
     /// Used to push and pull the whole views above the keybaod when it is shown or dimissed
     @IBOutlet weak var tapActionButtonBottomConstraint: NSLayoutConstraint!
+    /// Used to push and pull the whole views above the keybaod when it is shown or dimissed
+    //@IBOutlet weak var tapPoweredByTapBottomConstraint: NSLayoutConstraint!
     /// Reference to the tap action button
     @IBOutlet weak var tapActionButton: TapActionButton!
     /// Saves the current keyboard height when it is visible
@@ -60,7 +62,7 @@ import TapCardScanner_iOS
     
     /// Computes the needed bottom space margin including the button + the powered by tap view
     internal var neededBottomSpaceMargin:Double {
-        return tapActionButtonHeightConstraint.constant + powereByTapView.frame.height
+        return 0//tapActionButtonHeightConstraint.constant + tapActionButtonBottomConstraint.constant - 50.0
     }
     
     
@@ -118,7 +120,7 @@ import TapCardScanner_iOS
      */
     internal func neededSize() -> CGSize {
         var contentSize = scrollView.contentSize
-        contentSize.height += neededBottomSpaceMargin
+        contentSize.height += neededBottomSpaceMargin// + tapPoweredByTapBottomConstraint.constant
         return contentSize
     }
     
@@ -143,7 +145,7 @@ import TapCardScanner_iOS
         }
         // All good, time to animate the height :)
         if delaySizeChange {
-            newSizeTimer = Timer.scheduledTimer(timeInterval: 0.1 , target: self, selector: #selector(publishNewContentSize(timer:)), userInfo: ["newSize":newSize,"newFrame":self.frame], repeats: false)
+            newSizeTimer = Timer.scheduledTimer(timeInterval: 0.0 , target: self, selector: #selector(publishNewContentSize(timer:)), userInfo: ["newSize":newSize,"newFrame":self.frame], repeats: false)
         }else {
             newSize.height += keyboardPadding + neededBottomSpaceMargin
             
@@ -242,12 +244,35 @@ import TapCardScanner_iOS
      Calculates the max space that a view can be added in the sheet with respect to the current height of the views added + the maximum availble height given tor the sheet
      - Returns: The space that can be filled with respect to the crrent views heights + the maximum height the sheet can expand to
      */
-    @objc public func getMaxAvailableHeight() -> CGFloat {
+    @objc public func getMaxAvailableHeight(showingCardWebView:Bool = false) -> CGFloat {
         // Calculate the current views' height firs
         var currentViewsHeight:CGFloat = 0
         stackView.arrangedSubviews.forEach{ currentViewsHeight += ($0.frame.height > 0) ? $0.frame.height : 45 }
         
-        return TapConstantManager.maxAllowedHeight - currentViewsHeight - tapActionButton.frame.origin.y
+        if showingCardWebView {
+            // Then we need to remove the height of this view, as we will replace it with the web view already
+            if let view:TapCardTelecomPaymentView = stackView.arrangedSubviews.first(where: { $0 is TapCardTelecomPaymentView } ) as? TapCardTelecomPaymentView {
+                currentViewsHeight -= view.frame.height// - 180
+            }
+        }
+        
+        if tapActionButtonHeightConstraint.constant == 0 {
+            return TapConstantManager.maxAllowedHeight - currentViewsHeight - 56 // powered by tap top view
+        }else{
+            return TapConstantManager.maxAllowedHeight - currentViewsHeight - (showingCardWebView ? (tapActionButtonBottomConstraint.constant + tapActionButtonHeightConstraint.constant) : (tapActionButtonBottomConstraint.constant + tapActionButtonHeightConstraint.constant)) - 56 // powered by tap top view
+        }
+    }
+    
+    /**
+     Calculates the needed height to show all the views inside the checkout bottom sheet
+     - Returns: the needed height to show all the views inside the checkout bottom sheet
+     */
+    @objc public func getMinimumNeededHeight() -> CGFloat {
+        // Calculate the current views' height firs
+        var currentViewsHeight:CGFloat = 0
+        stackView.arrangedSubviews.forEach{ currentViewsHeight += ($0.frame.height > 0) ? $0.frame.height : 45 }
+        
+        return currentViewsHeight + tapActionButtonBottomConstraint.constant + tapActionButtonHeightConstraint.constant + 60
     }
     
     /**

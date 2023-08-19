@@ -27,12 +27,22 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     /// The delegate that the associated cell needs to subscribe to know the events and actions it should do
     internal var cellDelegate:GenericCellChipViewModelDelegate?
     /// Rerpesents the style of the apple pay button
-    internal var applePayButtonType:TapApplePayButtonType = .PayWithApplePay
+    internal var applePayButtonType:TapApplePayButtonType = .PayWithApplePay {
+        didSet{
+            onApplePayButtonUIChanged?()
+        }
+    }
     /// Rerpesents the style of the apple pay button
-    internal var applePayButtonStyle:TapApplePayButtonStyleOutline = .Black
+    internal var applePayButtonStyle:TapApplePayButtonStyleOutline = .Black {
+        didSet{
+            onApplePayButtonUIChanged?()
+        }
+    }
     /// Rerpesents the style of the apple pay request itself
     internal var tapApplePayRequest:TapApplePayRequest = .init()
     let tapApplePay:TapApplePay = .init()
+    /// a callback to do whenver we need to update the look & feel of the apple pay button
+    internal var onApplePayButtonUIChanged:(()->())? = nil
     
     // MARK:- Public methods
     public override func identefier() -> String {
@@ -55,7 +65,6 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
     }
     /**
      Configure the apple pay request attached to the apple pay chip, wil be used to pass it to the PassKit when clicked
-     - Parameter countryCode: The country the transaction is occurign in
      - Parameter currencyCode: The currency the transaction will be using
      - Parameter paymentNetworks: The list of allowed networks can be used bby the user to perform the transaction
      - Parameter applePayButtonType: The type of the pay button (Chekout, pay, book, etc)
@@ -63,10 +72,11 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
      - Parameter paymentItems: The PassKit items to be passed to the Apple Pay controller
      - Parameter amount: The total amoint to be passed to the Apple Pay controller
      - Parameter merchantID: The Apple pay merchant id to be used inside the apple pay kit
+     - Parameter recurringPaymentRequest: Defines the recurring payment request Please check [Apple Pay docs](https://developer.apple.com/documentation/passkit/pkrecurringpaymentrequest). NOTE: This will only be availble for iOS 16+ and subscripion parameter is on.
      */
-    @objc public func configureApplePayRequest(with countryCode:TapCountryCode = .KW , currencyCode:TapCurrencyCode = .KWD, paymentNetworks:[TapApplePayPaymentNetwork.RawValue] = [TapApplePayPaymentNetwork.Amex.rawValue,TapApplePayPaymentNetwork.MasterCard.rawValue,TapApplePayPaymentNetwork.Visa.rawValue], applePayButtonType:TapApplePayButtonType = .AppleLogoOnly, applePayButtonStyle:TapApplePayButtonStyleOutline = .Black, paymentItems:[PKPaymentSummaryItem] = [], amount:Double = 10, merchantID:String = "merchant.tap.gosell" ) {
+    @objc public func configureApplePayRequest(currencyCode:TapCurrencyCode = .KWD, paymentNetworks:[TapApplePayPaymentNetwork.RawValue] = [TapApplePayPaymentNetwork.Amex.rawValue,TapApplePayPaymentNetwork.MasterCard.rawValue,TapApplePayPaymentNetwork.Visa.rawValue], applePayButtonType:TapApplePayButtonType = .AppleLogoOnly, applePayButtonStyle:TapApplePayButtonStyleOutline = .Black, paymentItems:[PKPaymentSummaryItem] = [], amount:Double = 10, merchantID:String = "merchant.tap.gosell", recurringPaymentRequest:Any? = nil) {
         
-        tapApplePayRequest.build(with: countryCode, paymentNetworks: paymentNetworks.map{ TapApplePayPaymentNetwork.init(rawValue: $0)! }, paymentItems: paymentItems, paymentAmount: amount, currencyCode: currencyCode, merchantID: merchantID)
+        tapApplePayRequest.build(paymentNetworks: paymentNetworks.map{ TapApplePayPaymentNetwork.init(rawValue: $0)! }, paymentItems: paymentItems, paymentAmount: amount, currencyCode: currencyCode, merchantID: merchantID, recurringPaymentRequest: recurringPaymentRequest)
         
         self.applePayButtonType = applePayButtonType
         self.applePayButtonStyle = applePayButtonStyle
@@ -84,7 +94,7 @@ import enum CommonDataModelsKit_iOS.TapCurrencyCode
         tapApplePay.authorizePayment(in: .init(), for: tapApplePayRequest) { [weak self] (token) in
             guard let nonNullSelf = self else { return }
             nonNullSelf.viewModelDelegate?.applePayAuthoized(for: nonNullSelf, with: token)
-        }
+        } onErrorOccured: { _ in }
     }
     
     public override func didDeselectItem() {
