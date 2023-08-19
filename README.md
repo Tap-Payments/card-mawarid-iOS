@@ -40,7 +40,7 @@ To init the card kit, you will need to pass required data `before` showing the c
      - Parameter localeIdentifier : The ISO 639-1 Code language identefier, please note if the passed locale is wrong or not found in the localisation files, we will show the keys instead of the values
      - Parameter secretKey: The secret keys providede to your business from TAP.
      */
-let cardDataConfig:TapCardDataConfiguration = .init(sdkMode: .sandbox, localeIdentifier: "en", secretKey: .init(sandbox: "sk_test_yKOxBvwq3oLlcGS6DagZYHM2", production: "sk_live_V4UDhitI0r7sFwHCfNB6xMKp"))
+let cardDataConfig:TapCardDataConfiguration = .init(sdkMode: .sandbox, localeIdentifier: "en", secretKey: .init(sandbox: "pk_test_yKOxBvwq3oLlcGS6DagZYHM2", production: "pk_live_V4UDhitI0r7sFwHCfNB6xMKp"))
         /**
      Populate the card forum configuration with the required data.
      - Parameter dataConfig: The data configured by you as a merchant (e.g. secret key, locale, etc.). Required
