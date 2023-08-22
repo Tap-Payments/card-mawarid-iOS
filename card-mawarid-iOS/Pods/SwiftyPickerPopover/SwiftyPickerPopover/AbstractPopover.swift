@@ -138,7 +138,7 @@ open class AbstractPopover: NSObject {
         let color = backgroundColor ?? baseViewController.navigationController?.navigationBar.barTintColor ?? baseViewController.view.backgroundColor
         navigationController.navigationBar.barTintColor = color
         navigationController.popoverPresentationController?.backgroundColor =  color
-
+        
         tintColor = baseViewController.view.tintColor
         
         // dimmed backgorund view

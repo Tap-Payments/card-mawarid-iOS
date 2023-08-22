@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "card-mawarid-iOS"
-  spec.version      = "1.0.2"
+  spec.version      = "1.0.4"
   spec.summary      = "Card kit for Mawarid by Tap Payments"
 
   # This description is used to generate tags and improve search results.
@@ -137,7 +137,7 @@ Pod::Spec.new do |spec|
   spec.dependency "TapNetworkKit-iOS"
   spec.dependency "TapApplicationV2"
   spec.dependency "SwiftyRSA"
-  spec.dependency "TapKeychain"
+  spec.dependency "TapKeychainV2"
   spec.dependency "SwiftyPickerPopover"
   
   spec.pod_target_xcconfig = {

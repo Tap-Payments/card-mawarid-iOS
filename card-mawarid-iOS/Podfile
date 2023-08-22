@@ -9,7 +9,7 @@ target 'card-mawarid-iOS' do
 pod 'TapNetworkKit-iOS'
 pod 'TapApplicationV2'
 pod 'SwiftyRSA'
-pod 'TapKeychain'
+pod 'TapKeychainV2'
 pod 'TapUIKit-iOS'
 pod 'SwiftyPickerPopover'
 end
@@ -20,4 +20,14 @@ target 'MawaridCardExample' do
 
   # Pods for MawaridCardExample
 
+end
+
+post_install do |installer|
+    installer.generated_projects.each do |project|
+          project.targets.each do |target|
+              target.build_configurations.each do |config|
+                  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+               end
+          end
+   end
 end
